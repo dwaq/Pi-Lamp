@@ -1,6 +1,6 @@
 all: send
 
-send: RCSwitch.o send.o
+send: clickButton.o RCSwitch.o send.o
 	$(CXX) $(CXXFLAGS) $(LDFLAGS) $+ -o $@ -lwiringPi
 
 clean:
