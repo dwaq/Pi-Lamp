@@ -4,6 +4,7 @@
  */
 
 #include "RCSwitch.h"
+#include "clickButton.h"
 #include <stdlib.h>
 #include <stdio.h>
 
@@ -21,6 +22,8 @@ int main(int argc, char *argv[]) {
 
     // pin 3 is really GPIO 22 on the Pi
     int PIN = 3;            // 433 Mhz transmitter
+    int dillonLamp = 21;    // Dillon's lamp switch
+    int saraLamp = 23;      // Sara's lamp switch
     int command  = atoi(argv[1]);
 
     if (wiringPiSetup () == -1) return 1;
@@ -31,6 +34,10 @@ int main(int argc, char *argv[]) {
 
     // Set pulse length of a bit
     mySwitch.setPulseLength(PULSE_LENGTH);
+
+    // set up the Click Button object
+    ClickButton dillonButton(dillonLamp, LOW, CLICKBTN_PULLUP);
+    ClickButton saraButton(saraLamp, LOW, CLICKBTN_PULLUP);
 
     switch(command) {
         case 1:
