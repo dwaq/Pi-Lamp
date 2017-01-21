@@ -1,18 +1,18 @@
 /*    ClickButton
- 
+
  A library that decodes multiple clicks on one button.
  Also copes with long clicks and click-and-hold.
- 
+
  Usage: ClickButton buttonObject(pin [LOW/HIGH, [CLICKBTN_PULLUP]]);
- 
+
   where LOW/HIGH denotes active LOW or HIGH button (default is LOW)
   CLICKBTN_PULLUP is only possible with active low buttons.
- 
+
  Returned click counts:
 
    A positive number denotes the number of (short) clicks after a released button
    A negative number denotes the number of "long" clicks
- 
+
 NOTE!
  This is the OPPOSITE/negative of click codes from the last pre-2013 versions!
  (this seemed more logical and simpler, so I finally changed it)
@@ -22,17 +22,17 @@ NOTE!
  Copyright (C) 2010,2012, 2013 raron
 
  GNU GPLv3 license
- 
+
  This program is free software: you can redistribute it and/or modify
  it under the terms of the GNU General Public License as published by
  the Free Software Foundation, either version 3 of the License, or
  (at your option) any later version.
- 
+
  This program is distributed in the hope that it will be useful,
  but WITHOUT ANY WARRANTY; without even the implied warranty of
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  GNU General Public License for more details.
- 
+
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
@@ -51,7 +51,7 @@ NOTE!
 
 #include "clickButton.h"
 
-ClickButton::ClickButton(uint8_t buttonPin)
+ClickButton::ClickButton(int buttonPin)
 {
   _pin           = buttonPin;
   _activeHigh    = LOW;           // Assume active-low button
@@ -68,7 +68,7 @@ ClickButton::ClickButton(uint8_t buttonPin)
 }
 
 
-ClickButton::ClickButton(uint8_t buttonPin, boolean activeType)
+ClickButton::ClickButton(int buttonPin, boolean activeType)
 {
   _pin           = buttonPin;
   _activeHigh    = activeType;
@@ -84,7 +84,7 @@ ClickButton::ClickButton(uint8_t buttonPin, boolean activeType)
   pinMode(_pin, INPUT);
 }
 
-ClickButton::ClickButton(uint8_t buttonPin, boolean activeType, boolean internalPullup)
+ClickButton::ClickButton(int buttonPin, boolean activeType, boolean internalPullup)
 {
   _pin           = buttonPin;
   _activeHigh    = activeType;
@@ -100,9 +100,15 @@ ClickButton::ClickButton(uint8_t buttonPin, boolean activeType, boolean internal
 
   // Turn on internal pullup resistor if applicable
   if (_activeHigh == LOW && internalPullup == CLICKBTN_PULLUP)
-    pinMode(_pin, INPUT_PULLUP);
+  {
+    //pinMode(_pin, INPUT_PULLUP);
+    pullUpDnControl(_pin, PUD_UP);
+  }
   else
-    pinMode(_pin, INPUT_PULLDOWN);
+  {
+    //pinMode(_pin, INPUT_PULLDOWN);
+    pullUpDnControl(_pin, PUD_DOWN);
+  }
 }
 
 
@@ -113,10 +119,14 @@ void ClickButton::Update()
   _btnState = digitalRead(_pin);  // current appearant button state
 
   // Make the button logic active-high in code
-  if (!_activeHigh) _btnState = !_btnState;
+  if (!_activeHigh){
+      _btnState = !_btnState;
+  }
 
   // If the switch changed, due to noise or a button press, reset the debounce timer
-  if (_btnState != _lastState) _lastBounceTime = now;
+  if (_btnState != _lastState){
+      _lastBounceTime = now;
+  }
 
 
   // debounce the button (Check if a stable, changed state has occured)
@@ -144,4 +154,3 @@ void ClickButton::Update()
 
   _lastState = _btnState;
 }
-
