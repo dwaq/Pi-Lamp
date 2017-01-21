@@ -20,14 +20,14 @@
 int main(int argc, char *argv[]) {
 
     // pin 3 is really GPIO 22 on the Pi
-    int TRANSMITTER = 3;    // 433 Mhz transmitter
+    int PIN = 3;            // 433 Mhz transmitter
     int command  = atoi(argv[1]);
 
     if (wiringPiSetup () == -1) return 1;
 	printf("sending command[%i]\n", command);
 	RCSwitch mySwitch = RCSwitch();
     // setup the transmitter on pin 3
-	mySwitch.enableTransmit(TRANSMITTER);
+	mySwitch.enableTransmit(PIN);
 
     // Set pulse length of a bit
     mySwitch.setPulseLength(PULSE_LENGTH);
