@@ -75,20 +75,16 @@ int main(void) {
 
         if(dillonClicks == 1){
             //printf("SINGLE click\n");
-            //blockInterrupt = //blockInterruptTimes;
             toggleDillon(mySwitch);
         }
 
         if(dillonClicks == 2){
             //printf("DOUBLE click\n");
-            //blockInterrupt = //blockInterruptTimes;
             toggleSara(mySwitch);
         }
 
         if(dillonClicks == -1){
             //printf("SINGLE LONG click\n");
-            //blockInterrupt = //blockInterruptTimes;
-            // TODO
             matchToggle(dillon, mySwitch);
         }
 
@@ -103,20 +99,16 @@ int main(void) {
 
         if(saraClicks == 1){
             //printf("SINGLE click\n");
-            //blockInterrupt = //blockInterruptTimes;
             toggleSara(mySwitch);
         }
 
         if(saraClicks == 2){
             //printf("DOUBLE click\n");
-            //blockInterrupt = //blockInterruptTimes;
             toggleDillon(mySwitch);
         }
 
         if(saraClicks == -1){
             //printf("SINGLE LONG click\n");
-            //blockInterrupt = //blockInterruptTimes;
-            // TODO
             matchToggle(sara, mySwitch);
         }
 
