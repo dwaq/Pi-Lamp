@@ -54,6 +54,10 @@ int main(int argc, char *argv[]) {
     ClickButton dillonButton(dillonLamp, LOW, CLICKBTN_PULLUP);
     ClickButton saraButton(saraLamp, LOW, CLICKBTN_PULLUP);
 
+    // set up click button click counter
+    volatile int dillonClicks = 0;
+    volatile int saraClicks = 0;
+
     // set up the 2 switch pins as inputs with pullups
     pinMode(dillonLamp, INPUT);
     pullUpDnControl(dillonLamp, PUD_UP);
@@ -61,55 +65,61 @@ int main(int argc, char *argv[]) {
     pullUpDnControl(saraLamp, PUD_UP);
 
     while(1) {
-        // Update buttons state
+        // Update Dillon's button state
         dillonButton.Update();
-        saraButton.Update();
 
         // Dillon's button was clicked
-        if (dillonButton.clicks != 0){
+        if (dillonButton.clicks != 0) dillonClicks = dillonButton.clicks;
 
-            if(dillonButton.clicks == 1){
-                //Serial.println("SINGLE click");
-                //blockInterrupt = //blockInterruptTimes;
-                toggleDillon(mySwitch);
-            }
-
-            if(dillonButton.clicks == 2){
-                //Serial.println("DOUBLE click");
-                //blockInterrupt = //blockInterruptTimes;
-                toggleSara(mySwitch);
-            }
-
-            if(dillonButton.clicks == -1){
-                //Serial.println("SINGLE LONG click");
-                //blockInterrupt = //blockInterruptTimes;
-                // TODO
-                //matchToggle("DILLON");
-            }
+        if(dillonClicks == 1){
+            printf("SINGLE click\n");
+            //blockInterrupt = //blockInterruptTimes;
+            toggleDillon(mySwitch);
         }
+
+        if(dillonClicks == 2){
+            printf("DOUBLE click\n");
+            //blockInterrupt = //blockInterruptTimes;
+            toggleSara(mySwitch);
+        }
+
+        if(dillonClicks == -1){
+            printf("SINGLE LONG click\n");
+            //blockInterrupt = //blockInterruptTimes;
+            // TODO
+            //matchToggle("DILLON");
+        }
+
+        // reset counter for next round
+        dillonClicks = 0;
+
+        // update Sara's button state
+        saraButton.Update();
 
         // Sara's button was clicked
-        if (saraButton.clicks != 0){
+        if (saraButton.clicks != 0) saraClicks = saraButton.clicks;
 
-            if(saraButton.clicks == 1){
-                //Serial.println("SINGLE click");
-                //blockInterrupt = //blockInterruptTimes;
-                toggleSara(mySwitch);
-            }
-
-            if(saraButton.clicks == 2){
-                //Serial.println("DOUBLE click");
-                //blockInterrupt = //blockInterruptTimes;
-                toggleDillon(mySwitch);
-            }
-
-            if(saraButton.clicks == -1){
-                //Serial.println("SINGLE LONG click");
-                //blockInterrupt = //blockInterruptTimes;
-                // TODO
-                // matchToggle("SARA");
-            }
+        if(saraClicks == 1){
+            printf("SINGLE click\n");
+            //blockInterrupt = //blockInterruptTimes;
+            toggleSara(mySwitch);
         }
+
+        if(saraClicks == 2){
+            printf("DOUBLE click\n");
+            //blockInterrupt = //blockInterruptTimes;
+            toggleDillon(mySwitch);
+        }
+
+        if(saraClicks == -1){
+            printf("SINGLE LONG click\n");
+            //blockInterrupt = //blockInterruptTimes;
+            // TODO
+            // matchToggle("SARA");
+        }
+
+        // reset counter for next round
+        saraClicks = 0;
 
         delay(5);
     }
