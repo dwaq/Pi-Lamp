@@ -30,6 +30,14 @@ const int DILLON_BIT  = 0b01; // bit 0 is the state of Dillon's lamp
 const int SARA_BIT  = 0b10;   // bit 1 is the state of Sara's lamp
 int lampState = 0b00;   // stores the state of both lamps
 
+// arguments for matchToggle
+typedef enum {
+    dillon,
+    sara
+} LampOwners;
+
+void matchToggle(LampOwners owner, RCSwitch mySwitch);
+
 void toggleDillon(RCSwitch mySwitch);
 void toggleSara(RCSwitch mySwitch);
 
@@ -87,7 +95,7 @@ int main(int argc, char *argv[]) {
             printf("SINGLE LONG click\n");
             //blockInterrupt = //blockInterruptTimes;
             // TODO
-            //matchToggle("DILLON");
+            matchToggle(dillon, mySwitch);
         }
 
         // reset counter for next round
@@ -115,7 +123,7 @@ int main(int argc, char *argv[]) {
             printf("SINGLE LONG click\n");
             //blockInterrupt = //blockInterruptTimes;
             // TODO
-            // matchToggle("SARA");
+            matchToggle(sara, mySwitch);
         }
 
         // reset counter for next round
@@ -169,5 +177,43 @@ void toggleSara(RCSwitch mySwitch){
     else{
         // turn off Sara's lamp
         mySwitch.send(SARA_OFF, BIT_LENGTH);
+    }
+}
+
+/* set both lamps to a new state */
+void switchLamps(boolean on, RCSwitch mySwitch){
+    if(on){
+        // turn both lamps on
+        mySwitch.send(SARA_ON, BIT_LENGTH);
+        mySwitch.send(DILLON_ON, BIT_LENGTH);
+        lampState = 0b11;
+    }
+    else{
+        // turn both lamps off
+        mySwitch.send(DILLON_OFF, BIT_LENGTH);
+        mySwitch.send(SARA_OFF, BIT_LENGTH);
+        lampState = 0b00;
+    }
+}
+
+/* set both lamps to the opposite of the button's lamp's current state */
+void matchToggle(LampOwners owner, RCSwitch mySwitch){
+    int buttonBit;
+
+    // decide which button to check
+    if (owner == dillon){
+        buttonBit = DILLON_BIT;
+    }
+    else if (owner == sara){
+        buttonBit = SARA_BIT;
+    }
+
+    // currently on, so turn both off
+    if ((lampState & buttonBit) == buttonBit){
+        switchLamps(false, mySwitch);
+    }
+    // currently off, so turn both on
+    else {
+        switchLamps(true, mySwitch);
     }
 }
