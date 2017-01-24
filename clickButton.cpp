@@ -97,6 +97,7 @@ ClickButton::ClickButton(int buttonPin, boolean activeType, boolean internalPull
   debounceTime   = 20;            // Debounce timer in ms
   multiclickTime = 250;           // Time limit for multi clicks
   longClickTime  = 1000;          // time until "long" click register
+  pinMode(_pin, INPUT);
 
   // Turn on internal pullup resistor if applicable
   if (_activeHigh == LOW && internalPullup == CLICKBTN_PULLUP)
