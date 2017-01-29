@@ -1,7 +1,7 @@
-all: send
+all: pi-lamp
 
-send: clickButton/clickButton.o RCSwitch/RCSwitch.o send.o
+pi-lamp: clickButton/clickButton.o RCSwitch/RCSwitch.o pi-lamp.o
 	$(CXX) $(CXXFLAGS) $(LDFLAGS) $+ -o $@ -lwiringPi
 
 clean:
-	$(RM) *.o send
+	$(RM) *.o pi-lamp
