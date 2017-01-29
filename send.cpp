@@ -1,5 +1,5 @@
-#include "RCSwitch.h"
-#include "clickButton.h"
+#include "RCSwitch/RCSwitch.h"
+#include "clickButton/clickButton.h"
 #include <wiringPi.h>
 #include <stdlib.h>
 #include <stdio.h>
