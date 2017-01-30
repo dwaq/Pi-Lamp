@@ -36,12 +36,14 @@ void matchToggle(LampOwners owner, RCSwitch mySwitch);
 void toggleDillon(RCSwitch mySwitch);
 void toggleSara(RCSwitch mySwitch);
 
+void toggleLight(void);
+
 int main(void) {
 
     // pin 3 is really GPIO 22 on the Pi
     int PIN = 3;            // 433 Mhz transmitter
-    int dillonLamp = 21;    // Dillon's lamp switch
-    int saraLamp = 23;      // Sara's lamp switch
+    int dillonLamp = 23;    // Dillon's lamp switch
+    int saraLamp = 21;      // Sara's lamp switch
 
     if (wiringPiSetup () == -1) return 1;
 
