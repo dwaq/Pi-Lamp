@@ -20,6 +20,10 @@
 // length of packet to send
 #define BIT_LENGTH 24
 
+// stores the state of the lightSwitch
+int lightSwitchOn = 0;
+int *lightSwitchOnPtr = &lightSwitchOn;
+
 // the lamp's state is stored in a two bit binary number
 const int DILLON_BIT  = 0b01; // bit 0 is the state of Dillon's lamp
 const int SARA_BIT  = 0b10;   // bit 1 is the state of Sara's lamp
@@ -85,6 +89,11 @@ int main(void) {
             toggleSara(mySwitch);
         }
 
+        if(dillonClicks == 3){
+            //printf("TRIPLE click\n");
+            toggleLight();
+        }
+
         if(dillonClicks == -1){
             //printf("SINGLE LONG click\n");
             matchToggle(dillon, mySwitch);
@@ -107,6 +116,11 @@ int main(void) {
         if(saraClicks == 2){
             //printf("DOUBLE click\n");
             toggleDillon(mySwitch);
+        }
+
+        if(saraClicks == 3){
+            //printf("TRIPLE click\n");
+            toggleLight();
         }
 
         if(saraClicks == -1){
@@ -191,4 +205,19 @@ void matchToggle(LampOwners owner, RCSwitch mySwitch){
     else {
         switchLamps(true, mySwitch);
     }
+}
+
+/* toggles the overhead light using a Switchmate */
+void toggleLight(void){
+    // if on, turn off
+    if (*lightSwitchOnPtr){
+        system("./Switchmate/off.sh");
+    }
+    // if off, turn on
+    else {
+        system("./Switchmate/on.sh");
+    }
+
+    // toggle light switch state
+    *lightSwitchOnPtr = *lightSwitchOnPtr ^ 1;
 }
