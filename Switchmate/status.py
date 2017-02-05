@@ -33,5 +33,4 @@ if __name__ == '__main__':
   
   scanner = Scanner().withDelegate(ScanDelegate())
   
-  scanner.scan(30.0)
-  sys.exit()
+  scanner.scan(3.0)
