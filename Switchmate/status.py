@@ -8,7 +8,7 @@ Usage:
 	./switchmate.py
 """
 
-from time import time
+#from time import time
 
 from bluepy.btle import Scanner, DefaultDelegate
 
@@ -25,11 +25,11 @@ class ScanDelegate(DefaultDelegate):
 		if (dev.getValueText(AD_TYPE_UUID) == SWITCHMATE_UUID):
 			data = dev.getValueText(AD_TYPE_SERVICE_DATA)
 			# the bit at 0x0100 signifies if the switch is off or on
-			print time(), ("off", "on")[(int(data, 16) >> 8) & 1]
+			print ("off", "on")[(int(data, 16) >> 8) & 1]
 
 
 if __name__ == '__main__':
-  print('Looking for switchmate status...')
+  #print('Looking for switchmate status...')
   
   scanner = Scanner().withDelegate(ScanDelegate())
   
