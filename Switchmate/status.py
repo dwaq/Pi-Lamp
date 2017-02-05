@@ -89,10 +89,7 @@ def status():
 
 	scanner = Scanner().withDelegate(ScanDelegate())
 
-	scanner.clear()
-	scanner.start()
-	scanner.process(30.0)
-	scanner.stop()
+	scanner.scan(30.0)
 
 def scan():
 	print('Scanning...')
