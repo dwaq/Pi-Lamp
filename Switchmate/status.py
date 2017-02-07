@@ -33,4 +33,4 @@ if __name__ == '__main__':
   
   scanner = Scanner().withDelegate(ScanDelegate())
   
-  scanner.scan(3.0)
+  scanner.scan(0)
