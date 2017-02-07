@@ -82,7 +82,7 @@ int main(void) {
 
     // socket stuff
     struct sockaddr_un addr;
-    char buf[100];
+    char buf[3], last_buf[3];
     int fd,cl,rc;
 
     if ( (fd = socket(AF_UNIX, SOCK_STREAM, 0)) == -1) {
@@ -118,14 +118,27 @@ int main(void) {
         }
 
         while ( (rc=read(cl,buf,sizeof(buf))) > 0) {
-          printf("read %u bytes: %.*s\n", rc, rc, buf);
+		//printf("read %u bytes: %.*s\n", rc, rc, buf);
+
+		// if the current buffer is different than the last,
+		// change the status
+		if (strcmp(buf, last_buf)){
+			// convert ASCII character in buffer to integer
+			*lightSwitchOnPtr = buf[0] - '0';
+			//printf("%.*s %.*s\n", 3, buf, 3, last_buf);
+			printf("The lightswitch state is now: %i\n", lightSwitchOn);
+		}
+
+		// save current as last
+		strcpy (last_buf, buf);
         }
         if (rc == -1) {
           perror("read");
           exit(-1);
         }
         else if (rc == 0) {
-          printf("EOF\n");
+          // socket closed
+          //printf("EOF\n");
           close(cl);
         }
 
