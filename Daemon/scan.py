@@ -18,7 +18,7 @@ class ScanDelegate(DefaultDelegate):
         if (dev.getValueText(AD_TYPE_UUID) == SWITCHMATE_UUID):
             data = dev.getValueText(AD_TYPE_SERVICE_DATA)
             # the bit at 0x0100 signifies if the switch is off or on
-            status = ((int(data, 16) >> 8) & 1)
+            status = str((int(data, 16) >> 8) & 1)
 
             # Create a UDS socket
             sock = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
