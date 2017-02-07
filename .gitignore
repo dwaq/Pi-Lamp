@@ -1,3 +1,4 @@
 *.o
 pi-lamp
+server
 *.pyc
