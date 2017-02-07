@@ -24,7 +24,7 @@ try:
     message = random.choice(['0', '1'])    
     print >>sys.stderr, 'sending "%s"' % message
     sock.sendall(message)
-
+    '''
     amount_received = 0
     amount_expected = len(message)
     
@@ -32,7 +32,7 @@ try:
         data = sock.recv(16)
         amount_received += len(data)
         print >>sys.stderr, 'received "%s"' % data
-
+    '''
 finally:
     print >>sys.stderr, 'closing socket'
     sock.close()
