@@ -118,19 +118,19 @@ int main(void) {
         }
 
         while ( (rc=read(cl,buf,sizeof(buf))) > 0) {
-		//printf("read %u bytes: %.*s\n", rc, rc, buf);
+    		//printf("read %u bytes: %.*s\n", rc, rc, buf);
 
-		// if the current buffer is different than the last,
-		// change the status
-		if (strcmp(buf, last_buf)){
-			// convert ASCII character in buffer to integer
-			*lightSwitchOnPtr = buf[0] - '0';
-			//printf("%.*s %.*s\n", 3, buf, 3, last_buf);
-			printf("The lightswitch state is now: %i\n", lightSwitchOn);
-		}
+    		// if the current buffer is different than the last,
+    		// change the status
+    		if (strcmp(buf, last_buf)){
+    			// convert ASCII character in buffer to integer
+    			*lightSwitchOnPtr = buf[0] - '0';
+    			//printf("%.*s %.*s\n", 3, buf, 3, last_buf);
+    			printf("The lightswitch state is now: %i\n", lightSwitchOn);
+    		}
 
-		// save current as last
-		strcpy (last_buf, buf);
+    		// save current as last
+    		strcpy (last_buf, buf);
         }
         if (rc == -1) {
           perror("read");
