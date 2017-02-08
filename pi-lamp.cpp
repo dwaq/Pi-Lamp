@@ -82,7 +82,7 @@ int main(void) {
 
     // socket stuff
     struct sockaddr_un addr;
-    char buf[3], last_buf[3];
+    char buf[1], last_buf[1];
     int fd,cl,rc;
 
     if ( (fd = socket(AF_UNIX, SOCK_STREAM, 0)) == -1) {
