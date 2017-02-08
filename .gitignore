@@ -1,4 +1,5 @@
 *.o
+*.out
 pi-lamp
 server
 *.pyc
