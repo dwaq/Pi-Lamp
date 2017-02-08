@@ -290,4 +290,3 @@ void toggleLight(void){
     // toggle light switch state
     *lightSwitchOnPtr = *lightSwitchOnPtr ^ 1;
 }
-
