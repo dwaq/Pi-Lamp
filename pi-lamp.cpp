@@ -164,7 +164,12 @@ int main(void) {
         delay(5);
     }
 
+    // kill the scanner and thread
+    *scan_statusPtr = 0;
+    *killPtr = 1;
+
     // returns when thread execution is finished
+    // (should be finished because we killed it above)
     thread.join();
 
     return 0;
@@ -272,8 +277,7 @@ void scan_service(){
 			*scan_statusPtr = -1;
 		}
 
-		// read socket
-
+		// kill the thread
 		if (*killPtr == 1) {
 			*dataPtr = 1;
 			pthread_exit(NULL);
