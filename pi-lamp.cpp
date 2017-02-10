@@ -226,14 +226,8 @@ void scan_service(){
 	int scanner_running = 0;
 
 	while(1) {
-
-
-
-		//std::this_thread::sleep_for(std::chrono::milliseconds(500));
-		//std::cout << "Hello, thread. kill: " << *killPtr << std::endl;
-
-
-		if (scanner_running == 1){
+        //
+        if (scanner_running == 1){
 
 			// check socket
 			if ( (cl = accept(fd, NULL, NULL)) == -1) {
