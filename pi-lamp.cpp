@@ -367,7 +367,7 @@ void matchToggle(LampOwners owner, RCSwitch mySwitch){
 void toggleLight(void){
     // need to kill scanner before connecting to switchmate w/ bluetooth
     *scan_statusPtr = 0;
-    *killPtr = 1;
+    //*killPtr = 1;
 
     // if on, turn off
     if (*lightSwitchOnPtr){
