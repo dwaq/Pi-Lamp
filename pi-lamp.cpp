@@ -266,7 +266,7 @@ void scan_service(){
 			std::cout << "start scanner" << std::endl;
 			system("/home/pi/Pi-Lamp/Daemon/scan.py start");
 
-			// singnify that the scanner started
+			// flag to read scanner socket
 			scanner_running = 1;
 
 			// go back to default
@@ -277,6 +277,10 @@ void scan_service(){
 		if (*scan_statusPtr == 0) {
 			std::cout << "stop scanner" << std::endl;
 			system("/home/pi/Pi-Lamp/Daemon/scan.py stop");
+			
+			// stop reading the scanner socket
+			scanner_running = 0;
+
 			// go back to default
 			*scan_statusPtr = -1;
 		}
