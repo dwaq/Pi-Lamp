@@ -57,6 +57,26 @@ void toggleSara(RCSwitch mySwitch);
 
 void toggleLight(void);
 
+// http://thispointer.com/c11-multithreading-part-2-joining-and-detaching-threads/
+class ThreadRAII
+{
+    std::thread & m_thread;
+    public:
+        ThreadRAII(std::thread  & threadObj) : m_thread(threadObj)
+        {
+
+        }
+
+        ~ThreadRAII()
+        {
+            // Check if thread is joinable then detach the thread
+            if(m_thread.joinable())
+            {
+                m_thread.detach();
+            }
+        }
+};
+
 void scan_service(void);
 
 int main(void) {
@@ -168,11 +188,9 @@ int main(void) {
     *scan_statusPtr = 0;
     *killPtr = 1;
 
-    // returns when thread execution is finished
-    // (should be finished because we killed it above)
-    if(thread.joinable()){
-        thread.join();
-    }
+    // RESOURCE ACQUISITION IS INITIALIZATION allows us to call detach()
+    // in the case of exceptions
+    ThreadRAII wrapperObj(scan_service);
 
     return 0;
 }
