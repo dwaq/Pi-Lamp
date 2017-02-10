@@ -287,6 +287,7 @@ void scan_service(){
 
 		// kill the thread
 		if (*killPtr == 1) {
+		    // TODO: give up access to the socket file location?
 			pthread_exit(NULL);
 		}
 	}
