@@ -29,13 +29,6 @@
 int lightSwitchOn = 0;
 int *lightSwitchOnPtr = &lightSwitchOn;
 
-// to communicate with the thread
-int kill = 0;
-int *killPtr = &kill;
-
-int scan_status = -1;
-int *scan_statusPtr = &scan_status;
-
 // the lamp's state is stored in a two bit binary number
 const int DILLON_BIT  = 0b01; // bit 0 is the state of Dillon's lamp
 const int SARA_BIT  = 0b10;   // bit 1 is the state of Sara's lamp
@@ -74,6 +67,18 @@ class ThreadRAII
         }
 };
 
+// to communicate with the thread
+typedef enum {
+    running,
+    start,
+    stop,
+    kill
+} SwitchmateThread;
+
+// start scanner when thread is started
+SwitchmateThread status = start;
+SwitchmateThread *command = &status;
+
 void scan_service(void);
 
 int main(void) {
@@ -108,9 +113,6 @@ int main(void) {
 
     // create thread
     std::thread thread(scan_service);
-
-    // start scanner
-    *scan_statusPtr = 1;
 
     while(1) {
         // Update Dillon's button state
@@ -175,8 +177,7 @@ int main(void) {
     }
 
     // kill the scanner and thread
-    *scan_statusPtr = 0;
-    *killPtr = 1;
+    status = kill;
 
     // RESOURCE ACQUISITION IS INITIALIZATION allows us to call detach()
     // in the case of exceptions
@@ -186,8 +187,8 @@ int main(void) {
 }
 
 void scan_service(){
-
-	// Information on unix domain sockets
+    
+    // Information on unix domain sockets
 	// https://github.com/troydhanson/network/blob/master/unixdomain/srv.c
 	// path to our socket
 	const char *socket_path = "/tmp/pi-lamp-status";
@@ -222,12 +223,9 @@ void scan_service(){
 	  exit(-1);
 	}
 
-
-	int scanner_running = 0;
-
 	while(1) {
         //
-        if (scanner_running == 1){
+        if (*command == running){
 
 			// check socket
 			if ( (cl = accept(fd, NULL, NULL)) == -1) {
@@ -262,31 +260,25 @@ void scan_service(){
 		}
 
 		// start scanner
-		if (*scan_statusPtr == 1) {
+		else if (*command == start) {
 			std::cout << "start scanner" << std::endl;
 			system("/home/pi/Pi-Lamp/Daemon/scan.py start");
 
-			// flag to read scanner socket
-			scanner_running = 1;
-
-			// go back to default
-			*scan_statusPtr = -1;
+			// go back to running
+			status = running;
 		}
 
 		// stop scanner
-		if (*scan_statusPtr == 0) {
+		else if (*command == stop) {
 			std::cout << "stop scanner" << std::endl;
 			system("/home/pi/Pi-Lamp/Daemon/scan.py stop");
-			
-			// stop reading the scanner socket
-			scanner_running = 0;
 
-			// go back to default
-			*scan_statusPtr = -1;
+			// go back to running
+			status = running;
 		}
 
 		// kill the thread
-		if (*killPtr == 1) {
+		else if (*command == kill){
 		    // TODO: give up access to the socket file location?
 			pthread_exit(NULL);
 		}
@@ -366,8 +358,7 @@ void matchToggle(LampOwners owner, RCSwitch mySwitch){
 /* toggles the overhead light using a Switchmate */
 void toggleLight(void){
     // need to kill scanner before connecting to switchmate w/ bluetooth
-    *scan_statusPtr = 0;
-    //*killPtr = 1;
+    status = stop;
 
     // if on, turn off
     if (*lightSwitchOnPtr){
@@ -382,5 +373,5 @@ void toggleLight(void){
     *lightSwitchOnPtr = *lightSwitchOnPtr ^ 1;
 
     // start scanner again
-    *scan_statusPtr = 1;
+    status = start;
 }
