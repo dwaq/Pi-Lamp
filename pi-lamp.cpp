@@ -62,7 +62,7 @@ class ThreadRAII
 {
     std::thread & m_thread;
     public:
-        ThreadRAII(std::thread  & threadObj) : m_thread(threadObj)
+        ThreadRAII(std::thread  & thread) : m_thread(thread)
         {
 
         }
@@ -190,7 +190,7 @@ int main(void) {
 
     // RESOURCE ACQUISITION IS INITIALIZATION allows us to call detach()
     // in the case of exceptions
-    ThreadRAII wrapperObj(scan_service);
+    ThreadRAII wrapperObj(thread);
 
     return 0;
 }
