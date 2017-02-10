@@ -370,7 +370,8 @@ void toggleLight(void){
     }
 
     // toggle light switch state
-    *lightSwitchOnPtr = *lightSwitchOnPtr ^ 1;
+    // don't need to do this, because scanner should pick up on the changes automatically
+    //*lightSwitchOnPtr = *lightSwitchOnPtr ^ 1;
 
     // start scanner again
     status = start;
