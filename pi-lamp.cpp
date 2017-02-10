@@ -170,7 +170,9 @@ int main(void) {
 
     // returns when thread execution is finished
     // (should be finished because we killed it above)
-    thread.join();
+    if(thread.joinable()){
+        thread.join();
+    }
 
     return 0;
 }
