@@ -130,15 +130,8 @@ int main(void) {
         }
 
         if(dillonClicks == 3){
-            // need to kill scanner before connecting to switchmate w/ bluetooth
-            *scan_statusPtr = 0;
-			*killPtr = 1;
-
-            //printf("TRIPLE click\n");
+           //printf("TRIPLE click\n");
             toggleLight();
-
-            // start scanner
-            *scan_statusPtr = 1;
         }
 
         if(dillonClicks == -1){
@@ -373,6 +366,10 @@ void matchToggle(LampOwners owner, RCSwitch mySwitch){
 
 /* toggles the overhead light using a Switchmate */
 void toggleLight(void){
+    // need to kill scanner before connecting to switchmate w/ bluetooth
+    *scan_statusPtr = 0;
+    *killPtr = 1;
+
     // if on, turn off
     if (*lightSwitchOnPtr){
         system("./Switchmate/off.sh");
@@ -384,4 +381,7 @@ void toggleLight(void){
 
     // toggle light switch state
     *lightSwitchOnPtr = *lightSwitchOnPtr ^ 1;
+
+    // start scanner again
+    *scan_statusPtr = 1;
 }
