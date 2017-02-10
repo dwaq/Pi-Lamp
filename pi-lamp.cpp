@@ -33,9 +33,6 @@ int *lightSwitchOnPtr = &lightSwitchOn;
 int kill = 0;
 int *killPtr = &kill;
 
-int data = 0;
-int *dataPtr = &data;
-
 int scan_status = -1;
 int *scan_statusPtr = &scan_status;
 
@@ -299,7 +296,6 @@ void scan_service(){
 
 		// kill the thread
 		if (*killPtr == 1) {
-			*dataPtr = 1;
 			pthread_exit(NULL);
 		}
 	}
