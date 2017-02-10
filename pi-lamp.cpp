@@ -119,6 +119,9 @@ int main(void) {
 
             //printf("TRIPLE click\n");
             toggleLight();
+
+            // start scanner
+            *scan_statusPtr = 1;
         }
 
         if(dillonClicks == -1){
@@ -161,7 +164,7 @@ int main(void) {
         delay(5);
     }
 
-    // kill the thread
+    // returns when thread execution is finished
     thread.join();
 
     return 0;
