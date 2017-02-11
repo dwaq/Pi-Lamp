@@ -74,7 +74,7 @@ if __name__ == '__main__':
 		val = '\x00'
 	device.writeCharacteristic(STATE_HANDLE, sign('\x01' + val, auth_key))
 
-	print('Waiting for response')
+	print('Waiting for response...')
 	while True:
 		device.waitForNotifications(1.0)
 		print('.')
