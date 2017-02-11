@@ -1,8 +1,8 @@
 CXX=g++
 CXXFLAGS=-I. -std=c++11 -pthread
 
-DEPS=status.h clickButton/clickButton.h RCSwitch/RCSwitch.h
-OBJ=pi-lamp.o status.o clickButton/clickButton.o RCSwitch/RCSwitch.o
+DEPS=pi-lamp.h status.h clickButton/clickButton.h RCSwitch/RCSwitch.h
+OBJS=pi-lamp.o status.o clickButton/clickButton.o RCSwitch/RCSwitch.o
 
 LIBS=-lwiringPi
 
@@ -11,7 +11,7 @@ LIBS=-lwiringPi
 
 all: pi-lamp
 
-pi-lamp: $(OBJ)
+pi-lamp: $(OBJS)
 	$(CXX) $(CXXFLAGS) $(LDFLAGS) $+ -o $@ $(LIBS)
 
 clean:

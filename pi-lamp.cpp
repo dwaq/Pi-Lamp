@@ -1,35 +1,12 @@
-#include "RCSwitch/RCSwitch.h"
-#include "clickButton/clickButton.h"
 #include "pi-lamp.h"
 #include "status.h"
-#include <wiringPi.h>
-
-
-
 
 // the lamp's state is stored in a two bit binary number
 const int DILLON_BIT  = 0b01; // bit 0 is the state of Dillon's lamp
 const int SARA_BIT  = 0b10;   // bit 1 is the state of Sara's lamp
 int lampState = 0b00;   // stores the state of both lamps
 
-// arguments for matchToggle
-typedef enum {
-    dillon,
-    sara
-} LampOwners;
-
-void matchToggle(LampOwners owner, RCSwitch mySwitch);
-
-void toggleDillon(RCSwitch mySwitch);
-void toggleSara(RCSwitch mySwitch);
-
-void toggleLight(void);
-
-
-
-
 int main(void) {
-
     // pin 3 is really GPIO 22 on the Pi
     int PIN = 3;            // 433 Mhz transmitter
     int dillonLamp = 23;    // Dillon's lamp switch
@@ -37,10 +14,9 @@ int main(void) {
 
     if (wiringPiSetup () == -1) return 1;
 
-        RCSwitch mySwitch = RCSwitch();
-        // setup the transmitter on pin 3
-        mySwitch.enableTransmit(PIN);
-
+    RCSwitch mySwitch = RCSwitch();
+    // setup the transmitter on pin 3
+    mySwitch.enableTransmit(PIN);
     // Set pulse length of a bit
     mySwitch.setPulseLength(PULSE_LENGTH);
 
@@ -58,7 +34,7 @@ int main(void) {
     pinMode(saraLamp, INPUT);
     pullUpDnControl(saraLamp, PUD_UP);
 
-    // create thread
+    // create thread for status
     std::thread thread(scan_service);
 
     while(1) {
@@ -217,10 +193,6 @@ void toggleLight(void){
     else {
         system("./Switchmate/on.sh");
     }
-
-    // toggle light switch state
-    // don't need to do this, because scanner should pick up on the changes automatically
-    //*lightSwitchOnPtr = *lightSwitchOnPtr ^ 1;
 
     // start scanner again
     setStatus(start);
