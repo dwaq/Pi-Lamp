@@ -18,14 +18,12 @@ from docopt import docopt
 from bluepy.btle import Scanner, DefaultDelegate, Peripheral, ADDR_TYPE_RANDOM
 from binascii import hexlify, unhexlify
 
+STATE_NOTIFY_HANDLE = 0x000F
 NOTIFY_VALUE = struct.pack('<BB', 0x01, 0x00)
 
-AUTH_NOTIFY_HANDLE = 0x0017
-AUTH_HANDLE = 0x0016
-AUTH_INIT_VALUE = struct.pack('<BBBBBB', 0x00, 0x00, 0x00, 0x00, 0x01, 0x00)
+STATE_HANDLE = 0x000E
 
-STATE_HANDLE = 0x000e
-STATE_NOTIFY_HANDLE = 0x000f
+AUTH_HANDLE = 0x0016
 
 def c_mul(a, b):
 	'''
