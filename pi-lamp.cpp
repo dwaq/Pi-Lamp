@@ -1,5 +1,6 @@
 #include "RCSwitch/RCSwitch.h"
 #include "clickButton/clickButton.h"
+#include "pi-lamp.h"
 #include <wiringPi.h>
 #include <unistd.h>
 #include <sys/socket.h>
@@ -8,22 +9,6 @@
 #include <stdio.h>
 #include <iostream>
 #include <thread>
-
-// "addresses" for the relays
-#define DILLON_ON   0x451533
-#define DILLON_OFF  0x45153C
-
-#define SARA_ON     0x4515C3
-#define SARA_OFF    0x4515CC
-
-#define LIQUOR_ON   0x451703
-#define LIQUOR_OFF  0x45170C
-
-// length of each bit
-#define PULSE_LENGTH 190     // 0xBE
-
-// length of packet to send
-#define BIT_LENGTH 24
 
 // stores the state of the lightSwitch
 int lightSwitchOn = 0;
