@@ -56,7 +56,12 @@ class NotificationDelegate(DefaultDelegate):
 if __name__ == '__main__':
 	arguments = docopt(__doc__)
 
-	device = Peripheral(arguments['<mac_address>'], ADDR_TYPE_RANDOM)
+	# try to connect
+	try:
+		device = Peripheral(arguments['<mac_address>'], ADDR_TYPE_RANDOM)
+	except:
+		print "Unable to find device"
+		sys.exit()
 
 	notifications = NotificationDelegate()
 	device.setDelegate(notifications)
