@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import socket
-import sys, time
+import sys
 from daemon import Daemon
 from bluepy.btle import Scanner, DefaultDelegate
 
@@ -27,13 +27,13 @@ class ScanDelegate(DefaultDelegate):
             server_address = '/tmp/pi-lamp-status'
             print >>sys.stderr, 'connecting to %s' % server_address
             try:
-                    sock.connect(server_address)
+                sock.connect(server_address)
             except socket.error, msg:
-                    print >>sys.stderr, msg
-                    sys.exit(1)
+                print >>sys.stderr, msg
+                sys.exit(1)
 
+            # Send data to the socket
             try:
-                # Send data
                 print >>sys.stderr, 'sending "%s"' % status
                 sock.sendall(status)
             finally:
@@ -42,7 +42,7 @@ class ScanDelegate(DefaultDelegate):
 
 class MyDaemon(Daemon):
     def run(self):
-        # scan for Switchmates
+        # Continuously scan for Switchmates
         scanner = Scanner().withDelegate(ScanDelegate())
         scanner.scan(0)
 
@@ -62,4 +62,3 @@ if __name__ == "__main__":
     else:
         print "usage: %s start|stop|restart" % sys.argv[0]
         sys.exit(2)
-
