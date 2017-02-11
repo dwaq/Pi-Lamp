@@ -5,7 +5,7 @@
 A python-based command line utility for controlling Switchmate switches
 
 Usage:
-	./switch.py <mac_address> <auth_key> switch [on | off]
+	./switch.py <mac_address> <auth_key> [on | off]
 """
 
 import struct
@@ -66,14 +66,13 @@ if __name__ == '__main__':
 	notifications = NotificationDelegate()
 	device.setDelegate(notifications)
 
-	if arguments['switch']:
-		auth_key = unhexlify(arguments['<auth_key>'])
-		device.writeCharacteristic(STATE_NOTIFY_HANDLE, NOTIFY_VALUE, True)
-		if arguments['on']:
-			val = '\x01'
-		else:
-			val = '\x00'
-		device.writeCharacteristic(STATE_HANDLE, sign('\x01' + val, auth_key))
+	auth_key = unhexlify(arguments['<auth_key>'])
+	device.writeCharacteristic(STATE_NOTIFY_HANDLE, NOTIFY_VALUE, True)
+	if arguments['on']:
+		val = '\x01'
+	else:
+		val = '\x00'
+	device.writeCharacteristic(STATE_HANDLE, sign('\x01' + val, auth_key))
 
 	print('Waiting for response')
 	while True:
