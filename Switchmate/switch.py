@@ -5,14 +5,9 @@
 A python-based command line utility for controlling Switchmate switches
 
 Usage:
-	./switchmate.py scan
-	./switchmate.py status
-	./switchmate.py <mac_address> auth
-	./switchmate.py <mac_address> <auth_key> switch [on | off]
-	./switchmate.py -h | --help
+	./switch.py <mac_address> <auth_key> switch [on | off]
 """
 
-#from __future__ import print_function
 import struct
 import sys
 import ctypes
@@ -60,7 +55,6 @@ class NotificationDelegate(DefaultDelegate):
 		DefaultDelegate.__init__(self)
 
 	def handleNotification(self, handle, data):
-		print('')
 		if handle == AUTH_HANDLE:
 			print('Auth key is {}'.format(hexlify(data[3:]).upper()))
 		else:
@@ -68,66 +62,8 @@ class NotificationDelegate(DefaultDelegate):
 		device.disconnect()
 		sys.exit()
 
-class ScanDelegate(DefaultDelegate):
-	def __init__(self):
-		DefaultDelegate.__init__(self)
-
-	def handleDiscovery(self, dev, isNewDev, isNewData):
-		AD_TYPE_UUID = 0x07
-		SWITCHMATE_UUID = '23d1bcea5f782315deef121223150000'
-
-		AD_TYPE_SERVICE_DATA = 0x16
-
-		if (dev.getValueText(AD_TYPE_UUID) == SWITCHMATE_UUID):
-			data = dev.getValueText(AD_TYPE_SERVICE_DATA)
-			# the bit at 0x0100 signifies if the switch is off or on
-			print time(), ("off", "on")[(int(data, 16) >> 8) & 1]
-
-def status():
-	print('Looking for switchmate status...')
-	sys.stdout.flush()
-
-	scanner = Scanner().withDelegate(ScanDelegate())
-
-	scanner.clear()
-	scanner.start()
-	scanner.process(30.0)
-	scanner.stop()
-
-def scan():
-	print('Scanning...')
-	sys.stdout.flush()
-
-	scanner = Scanner()
-	devices = scanner.scan(10.0)
-
-	SERVICES_AD_TYPE = 7
-	SWITCHMATE_SERVICE = '23d1bcea5f782315deef121223150000'
-
-	switchmates = []
-	for dev in devices:
-		for (adtype, desc, value) in dev.getScanData():
-			is_switchmate = adtype == SERVICES_AD_TYPE and value == SWITCHMATE_SERVICE
-			if is_switchmate and dev not in switchmates:
-				switchmates.append(dev)
-
-	if len(switchmates):
-		print('Found Switchmates:')
-		for switchmate in switchmates:
-			print(switchmate.addr)
-	else:
-		print('No Switchmate devices found');
-
 if __name__ == '__main__':
 	arguments = docopt(__doc__)
-
-	if arguments['scan']:
-		scan()
-		sys.exit()
-
-	if arguments['status']:
-		status()
-		sys.exit()
 
 	device = Peripheral(arguments['<mac_address>'], ADDR_TYPE_RANDOM)
 
@@ -142,10 +78,6 @@ if __name__ == '__main__':
 		else:
 			val = '\x00'
 		device.writeCharacteristic(STATE_HANDLE, sign('\x01' + val, auth_key))
-	else:
-		device.writeCharacteristic(AUTH_NOTIFY_HANDLE, NOTIFY_VALUE, True)
-		device.writeCharacteristic(AUTH_HANDLE, AUTH_INIT_VALUE, True)
-		print('Press button on Switchmate to get auth key')
 
 	print('Waiting for response')
 	while True:
