@@ -1,11 +1,11 @@
 #! /usr/bin/env python
 
-"""switchmate.py
+"""scan.py
 
 A python-based command line utility for scanning for Switchmate switches
 
 Usage:
-	./scan.py
+	sudo ./scan.py
 """
 
 import sys
