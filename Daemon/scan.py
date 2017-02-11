@@ -42,7 +42,7 @@ class ScanDelegate(DefaultDelegate):
 
 class MyDaemon(Daemon):
     def run(self):
-        # Continuously scan for Switchmates
+        # Continuously scan for Switchmate status
         scanner = Scanner().withDelegate(ScanDelegate())
         scanner.scan(0)
 
