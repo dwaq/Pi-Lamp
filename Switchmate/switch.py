@@ -14,14 +14,12 @@ import ctypes
 
 from docopt import docopt
 from bluepy.btle import DefaultDelegate, Peripheral, ADDR_TYPE_RANDOM
-from binascii import hexlify, unhexlify
+from binascii import unhexlify
 
 STATE_NOTIFY_HANDLE = 0x000F
 NOTIFY_VALUE = struct.pack('<BB', 0x01, 0x00)
 
 STATE_HANDLE = 0x000E
-
-AUTH_HANDLE = 0x0016
 
 def c_mul(a, b):
 	'''
@@ -51,10 +49,7 @@ class NotificationDelegate(DefaultDelegate):
 		DefaultDelegate.__init__(self)
 
 	def handleNotification(self, handle, data):
-		if handle == AUTH_HANDLE:
-			print('Auth key is {}'.format(hexlify(data[3:]).upper()))
-		else:
-			print('Switched!')
+		print('Switched!')
 		device.disconnect()
 		sys.exit()
 
