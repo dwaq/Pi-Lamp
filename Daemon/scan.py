@@ -47,7 +47,7 @@ class MyDaemon(Daemon):
         scanner.scan(0)
 
 if __name__ == "__main__":
-    daemon = MyDaemon('/tmp/pi-lamp-scan.pid')
+    daemon = MyDaemon('/tmp/pi-lamp-status.pid')
     if len(sys.argv) == 2:
         if 'start' == sys.argv[1]:
             daemon.start()
