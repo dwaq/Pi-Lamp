@@ -187,7 +187,7 @@ int main(void) {
 }
 
 void scan_service(){
-    
+
     // Information on unix domain sockets
 	// https://github.com/troydhanson/network/blob/master/unixdomain/srv.c
 	// path to our socket
@@ -261,8 +261,8 @@ void scan_service(){
 
 		// start scanner
 		else if (*command == start) {
-			std::cout << "start scanner" << std::endl;
-			system("/home/pi/Pi-Lamp/Daemon/scan.py start");
+			std::cout << "Start status daemon" << std::endl;
+			system("./Daemon/statusd.py start");
 
 			// go back to running
 			status = running;
@@ -270,8 +270,8 @@ void scan_service(){
 
 		// stop scanner
 		else if (*command == stop) {
-			std::cout << "stop scanner" << std::endl;
-			system("/home/pi/Pi-Lamp/Daemon/scan.py stop");
+			std::cout << "Stop status daemon" << std::endl;
+			system("./Daemon/statusd.py stop");
 
 			// go back to running
 			status = running;
