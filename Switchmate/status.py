@@ -2,13 +2,12 @@
 
 """switchmate.py
 
-A python-based command line utility for controlling Switchmate switches
+A python-based command line utility for reading the status of Switchmate switches
 
 Usage:
-    ./switchmate.py
+    ./status.py
 """
 
-#from time import time
 import socket
 import sys
 from bluepy.btle import Scanner, DefaultDelegate
