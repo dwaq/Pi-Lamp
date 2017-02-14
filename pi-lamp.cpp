@@ -37,7 +37,17 @@ int main(void) {
     // create thread for status
     std::thread thread(scan_service);
 
+    int oldState = getSwitchState();
+    int newState = oldState;
+
     while(1) {
+        // print state change
+        newState = getSwitchState();
+        if (oldState != newState) {
+            printf("%i\n", newState);
+        }
+        oldState = newState;
+
         // Update Dillon's button state
         dillonButton.Update();
 
