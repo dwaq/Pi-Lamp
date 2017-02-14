@@ -1,4 +1,4 @@
-CXX=g++
+CXX=g++ -g
 CXXFLAGS=-I. -std=c++11 -pthread
 
 DEPS=pi-lamp.h status.h clickButton/clickButton.h RCSwitch/RCSwitch.h
