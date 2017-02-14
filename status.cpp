@@ -23,6 +23,14 @@ int getSwitchState(void){
 }
 
 
+struct hci_state {
+	int device_id;
+	int device_handle;
+	struct hci_filter original_filter;
+	int state;
+	int has_error;
+	char error_message[1024];
+} hci_state;
 
 struct hci_state current_hci_state;
 
@@ -130,7 +138,7 @@ void error_check_and_exit(struct hci_state current_hci_state)
 {
 	if (current_hci_state.has_error)
 	{
-		cout << "ERROR: " << current_hci_state.error_message << endl;
+		std::cout << "ERROR: " << current_hci_state.error_message << std::endl;
 		exit(1);
 	}
 }
@@ -139,14 +147,14 @@ void process_data(uint8_t *data, size_t data_len, le_advertising_info *info)
 {
 	if (data[0] == SERVICE_DATA)
 	{
-		//cout << "Service data type: len=" << data_len << endl;
+		//std::cout << "Service data type: len=" << data_len << std::endl;
 
 		int i;
 		for (i = 1; i < data_len; i++)
 		{
-			//cout << "\tData : " << (int)data[i] << endl;
+			//std::cout << "\tData : " << (int)data[i] << std::endl;
 			if (i == 7) {
-			    cout << (int(data[i]) & 1) << endl;
+			    std::cout << (int(data[i]) & 1) << std::endl;
 			}
 		}
 	}
@@ -229,7 +237,7 @@ void scan_service(){
 
 	error_check_and_exit(current_hci_state);
 
-	cout << "Scanning..." << endl;
+	std::cout << "Scanning..." << std::endl;
 
 	int done = 0;
 	int error = 0;
@@ -254,14 +262,14 @@ void scan_service(){
 
 			if (meta->subevent != EVT_LE_ADVERTISING_REPORT)
 			{
-				cout << "continue" << endl;
+				std::cout << "continue" << std::endl;
 				continue;
 			}
 
 			le_advertising_info *info = (le_advertising_info *) (meta->data + 1);
 
-			//cout << "\nEvent: " << (int)info->evt_type << endl;
-			//cout << "Length: " << (int)info->length << endl;
+			//std::cout << "\nEvent: " << (int)info->evt_type << std::endl;
+			//std::cout << "Length: " << (int)info->length << std::endl;
 
 			if (info->length == 0)
 			{
@@ -277,7 +285,7 @@ void scan_service(){
 
 				if (data_len + 1 > info->length)
 				{
-					cout << "EIR data length is longer than EIR packet length. " << data_len << "+ 1 > " << info->length << endl;
+					std::cout << "EIR data length is longer than EIR packet length. " << data_len << "+ 1 > " << info->length << std::endl;
 					data_error = 1;
 				}
 				else
@@ -292,7 +300,7 @@ void scan_service(){
 
 	if (error)
 	{
-		cout << "Error scanning." << endl;
+		std::cout << "Error scanning." << std::endl;
 	}
 
 	stop_hci_scan(current_hci_state);
@@ -301,7 +309,7 @@ void scan_service(){
 
 	close_hci_device(current_hci_state);
 
-	return 0;
+	//return 0;
 
     /*
 	while(1) {

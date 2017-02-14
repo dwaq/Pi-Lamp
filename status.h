@@ -1,3 +1,6 @@
+#ifndef __STATUS_H__
+#define __STATUS_H__
+
 // for threads
 #include <thread>
 
@@ -12,11 +15,11 @@
 #include <iostream>
 
 // for bluetooth library
-#include <stdlib.h>
+//#include <stdlib.h>
 #include <errno.h>
-#include <unistd.h>
+//#include <unistd.h>
 #include <sys/ioctl.h>
-#include <iostream>
+//#include <iostream>
 #include <signal.h>
 
 // for bluetooth
@@ -30,14 +33,7 @@
 #define HCI_STATE_SCANNING   3
 #define HCI_STATE_FILTERING  4
 
-struct hci_state {
-	int device_id;
-	int device_handle;
-	struct hci_filter original_filter;
-	int state;
-	int has_error;
-	char error_message[1024];
-} hci_state;
+
 
 #define EIR_FLAGS                   0X01
 #define EIR_NAME_SHORT              0x08
@@ -80,3 +76,5 @@ class ThreadRAII
             }
         }
 };
+
+#endif
