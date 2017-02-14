@@ -100,7 +100,7 @@ int main(void) {
     }
 
     // kill the scanner and thread
-    setStatus(kill);
+    setStatus(kill_it);
 
     // RESOURCE ACQUISITION IS INITIALIZATION allows us to call detach()
     // in the case of exceptions
