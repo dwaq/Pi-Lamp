@@ -149,6 +149,10 @@ void process_data(uint8_t *data, size_t data_len, le_advertising_info *info)
 	{
 		//std::cout << "Service data type: len=" << data_len << std::endl;
 
+        // last bit of the 7th data piece is the Switchmate status
+        setSwitchState(int(data[7]) & 1);
+
+        /*
 		int i;
 		for (i = 1; i < data_len; i++)
 		{
@@ -157,6 +161,7 @@ void process_data(uint8_t *data, size_t data_len, le_advertising_info *info)
 			    std::cout << (int(data[i]) & 1) << std::endl;
 			}
 		}
+        */
 	}
 }
 
