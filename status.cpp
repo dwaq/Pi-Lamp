@@ -13,7 +13,8 @@ SwitchmateThread getStatus(void){
 
 
 /* stores the state of the lightSwitch */
-int switchState = 0;
+// set to -1 so when it get a reading, it's different and prints out initial state
+int switchState = -1;
 
 void setSwitchState(int state){
     switchState = state;
