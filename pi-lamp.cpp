@@ -44,7 +44,7 @@ int main(void) {
         // print state change
         newState = getSwitchState();
         if (oldState != newState) {
-            printf("%i\n", newState);
+            printf("Switchmate state changed to: %i\n", newState);
         }
         oldState = newState;
 
