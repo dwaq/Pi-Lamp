@@ -154,47 +154,6 @@ void process_data(uint8_t *data, size_t data_len, le_advertising_info *info)
 	}
 }
 
-
-int get_rssi(bdaddr_t *bdaddr, struct hci_state current_hci_state)
-{
-	struct hci_dev_info di;
-	if (hci_devinfo(current_hci_state.device_id, &di) < 0) {
-		perror("Can't get device info");
-		return (-1);
-	}
-
-	uint16_t handle;
-// int hci_create_connection(int dd, const bdaddr_t *bdaddr, uint16_t ptype, uint16_t clkoffset, uint8_t rswitch, uint16_t *handle, int to);
-// HCI_DM1 | HCI_DM3 | HCI_DM5 | HCI_DH1 | HCI_DH3 | HCI_DH5
-	if (hci_create_connection(current_hci_state.device_handle, bdaddr, htobs(di.pkt_type & ACL_PTYPE_MASK), 0, 0x01, &handle, 25000) < 0) {
-		perror("Can't create connection");
-		// TODO close(dd);
-		return (-1);
-	}
-	sleep(1);
-
-	struct hci_conn_info_req *cr = (hci_conn_info_req*)malloc(sizeof(*cr) + sizeof(struct hci_conn_info));
-	bacpy(&cr->bdaddr, bdaddr);
-	cr->type = ACL_LINK;
-	if (ioctl(current_hci_state.device_handle, HCIGETCONNINFO, (unsigned long) cr) < 0) {
-		perror("Get connection info failed");
-		return (-1);
-	}
-
-	int8_t rssi;
-	if (hci_read_rssi(current_hci_state.device_handle, htobs(cr->conn_info->handle), &rssi, 1000) < 0) {
-		perror("Read RSSI failed");
-		return (-1);
-	}
-
-	printf("RSSI return value: %d\n", rssi);
-
-	free(cr);
-
-	usleep(10000);
-	hci_disconnect(current_hci_state.device_handle, handle, HCI_OE_USER_ENDED_CONNECTION, 10000);
-}
-
 void my_handler(int s) {
 
 	printf("Caught signal %d\n", s);
@@ -285,7 +244,6 @@ void scan_service(){
 				else
 				{
 					process_data((uint8_t *)(((uint8_t *)&info->data) + current_index + 1), data_len, info);
-					//get_rssi(&info->bdaddr, current_hci_state);
 					current_index += data_len + 1;
 				}
 			}
