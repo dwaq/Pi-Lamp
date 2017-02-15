@@ -41,17 +41,6 @@
 #define SERVICE_DATA                0x16
 #define EIR_MANUFACTURE_SPECIFIC    0xFF
 
-// to communicate with the thread
-typedef enum {
-    running,
-    start,
-    stop,
-    kill_it
-} SwitchmateThread;
-
-void setStatus(SwitchmateThread status);
-SwitchmateThread getStatus(void);
-
 void setSwitchState(int state);
 int getSwitchState(void);
 

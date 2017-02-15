@@ -305,43 +305,4 @@ void scan_service(){
 
 	pthread_exit(NULL);
 	//return 0;
-
-    /*
-	while(1) {
-        //
-        if (getStatus() == running){
-			// convert ASCII character in buffer to integer
-			int state = buf[0] - '0';
-
-            setSwitchState(state);
-			//printf("%.*s %.*s\n", 3, buf, 3, last_buf);
-			printf("The lightswitch state is now: %i\n", state);
-
-		}
-
-		// start scanner
-		else if (getStatus() == start) {
-			printf("Start status daemon\n");
-			system("./Daemon/statusd.py start");
-
-			// go back to running
-			status = running;
-		}
-
-		// stop scanner
-		else if (getStatus() == stop) {
-			printf("Stop status daemon");
-			system("./Daemon/statusd.py stop");
-
-			// go back to running
-			status = running;
-		}
-
-		// kill the thread
-		else if (getStatus() == kill){
-		    // TODO: give up access to the socket file location?
-			pthread_exit(NULL);
-		}
-	}
-    */
 }
