@@ -1,18 +1,18 @@
 /*    ClickButton
-
+ 
  A library that decodes multiple clicks on one button.
  Also copes with long clicks and click-and-hold.
-
+ 
  Usage: ClickButton buttonObject(pin [LOW/HIGH, [CLICKBTN_PULLUP]]);
-
+ 
   where LOW/HIGH denotes active LOW or HIGH button (default is LOW)
   CLICKBTN_PULLUP is only possible with active low buttons.
-
+ 
  Returned click counts:
 
    A positive number denotes the number of (short) clicks after a released button
    A negative number denotes the number of "long" clicks
-
+ 
 NOTE!
  This is the OPPOSITE/negative of click codes from the last pre-2013 versions!
  (this seemed more logical and simpler, so I finally changed it)
@@ -22,17 +22,17 @@ NOTE!
  Copyright (C) 2010,2012, 2013 raron
 
  GNU GPLv3 license
-
+ 
  This program is free software: you can redistribute it and/or modify
  it under the terms of the GNU General Public License as published by
  the Free Software Foundation, either version 3 of the License, or
  (at your option) any later version.
-
+ 
  This program is distributed in the hope that it will be useful,
  but WITHOUT ANY WARRANTY; without even the implied warranty of
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  GNU General Public License for more details.
-
+ 
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
@@ -50,28 +50,18 @@ NOTE!
 */
 
 // -------- clickButton.h --------
-//#include "application.h"
-#ifndef _clickButton_h
-#define _clickButton_h
 
-#if defined(ARDUINO) && ARDUINO >= 100
-    #include "Arduino.h"
+// Particle devices
+#if defined PLATFORM_ID
+	#include "Particle.h"
+// Raspberry Pi
 #else
-    #include <wiringPi.h>
-    #include <stdint.h>
-    #define NULL 0
-    #define CHANGE 1
-#ifdef __cplusplus
-extern "C"{
-#endif
-typedef uint8_t boolean;
-typedef uint8_t byte;
+	// for uint8_t
+	#include "stdint.h"
+	// for GPIO functionality
+	#include <wiringPi.h>
 
-#if !defined(NULL)
-#endif
-#ifdef __cplusplus
-}
-#endif
+	typedef uint8_t boolean;
 #endif
 
 #define CLICKBTN_PULLUP HIGH
@@ -79,9 +69,9 @@ typedef uint8_t byte;
 class ClickButton
 {
   public:
-    ClickButton(int buttonPin);
-    ClickButton(int buttonPin, boolean active);
-    ClickButton(int buttonPin, boolean active, boolean internalPullup);
+    ClickButton(uint8_t buttonPin);
+    ClickButton(uint8_t buttonPin, boolean active);
+    ClickButton(uint8_t buttonPin, boolean active, boolean internalPullup);
     void Update();
     int clicks;                   // button click counts to return
     boolean depressed;            // the currently debounced button (press) state (presumably it is not sad :)
@@ -89,7 +79,7 @@ class ClickButton
     long multiclickTime;
     long longClickTime;
   private:
-    int _pin;                 // Arduino pin connected to the button
+    uint8_t _pin;                 // Arduino pin connected to the button
     boolean _activeHigh;          // Type of button: Active-low = 0 or active-high = 1
     boolean _btnState;            // Current appearant button state
     boolean _lastState;           // previous button reading
@@ -97,5 +87,5 @@ class ClickButton
     long _lastBounceTime;         // the last time the button input pin was toggled, due to noise or a press
 };
 
-#endif
 // -------- end clickButton.h --------
+
