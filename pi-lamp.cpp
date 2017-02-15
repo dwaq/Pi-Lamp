@@ -110,7 +110,7 @@ int main(void) {
     }
 
     // kill the scanner and thread
-    setStatus(kill_it);
+    //setStatus(kill_it);
 
     // RESOURCE ACQUISITION IS INITIALIZATION allows us to call detach()
     // in the case of exceptions
@@ -193,7 +193,7 @@ void matchToggle(LampOwners owner, RCSwitch mySwitch){
 /* toggles the overhead light using a Switchmate */
 void toggleLight(void){
     // need to kill scanner before connecting to switchmate w/ bluetooth
-    setStatus(stop);
+    //setStatus(stop);
 
     // if on, turn off
     if (getSwitchState()){
@@ -205,5 +205,5 @@ void toggleLight(void){
     }
 
     // start scanner again
-    setStatus(start);
+    //setStatus(start);
 }

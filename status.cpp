@@ -1,17 +1,5 @@
 #include "status.h"
 
-
-/* start scanner when thread is started */
-SwitchmateThread status = start;
-
-void setStatus(SwitchmateThread s){
-    status = s;
-}
-SwitchmateThread getStatus(void){
-    return status;
-}
-
-
 /* stores the state of the lightSwitch */
 // set to -1 so when it get a reading, it's different and prints out initial state
 int switchState = -1;
@@ -218,7 +206,7 @@ void my_handler(int s) {
 
 		close_hci_device(current_hci_state);
 	}
-
+	pthread_exit(NULL);
 	exit(1);
 }
 
@@ -315,6 +303,7 @@ void scan_service(){
 
 	close_hci_device(current_hci_state);
 
+	pthread_exit(NULL);
 	//return 0;
 
     /*

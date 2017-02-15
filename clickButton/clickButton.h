@@ -53,15 +53,15 @@ NOTE!
 
 // Particle devices
 #if defined PLATFORM_ID
-	#include "Particle.h"
+  #include "Particle.h"
 // Raspberry Pi
 #else
-	// for uint8_t
-	#include "stdint.h"
-	// for GPIO functionality
-	#include <wiringPi.h>
+  // for uint8_t
+  #include "stdint.h"
+  // for GPIO functionality
+  #include <wiringPi.h>
 
-	typedef uint8_t boolean;
+  typedef uint8_t boolean;
 #endif
 
 #define CLICKBTN_PULLUP HIGH
