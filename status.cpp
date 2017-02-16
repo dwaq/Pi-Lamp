@@ -152,7 +152,7 @@ void my_handler(int s) {
 
 		close_hci_device(current_hci_state);
 	}
-	pthread_exit(NULL);
+
 	exit(1);
 }
 
@@ -248,6 +248,5 @@ void scan_service(){
 
 	close_hci_device(current_hci_state);
 
-	pthread_exit(NULL);
 	//return 0;
 }
