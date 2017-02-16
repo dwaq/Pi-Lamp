@@ -137,7 +137,7 @@ void process_data(uint8_t *data, size_t data_len, le_advertising_info *info)
 	if (data[0] == SERVICE_DATA)
 	{
 		// last bit of the 7th data piece is the Switchmate status
-        setSwitchState(int(data[7]) & 1);
+        std::cout << (int(data[7]) & 1) << std::endl;
 	}
 }
 
@@ -249,4 +249,11 @@ void scan_service(){
 	close_hci_device(current_hci_state);
 
 	//return 0;
+}
+
+
+int main(void){
+    scan_service();
+
+    return 0;
 }
