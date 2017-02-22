@@ -11,6 +11,11 @@ int getSwitchState(void){
     return switchState;
 }
 
+// used to cancel the scan from main thread
+int done = 0;
+void cancelScan(void){
+    done = 1;
+}
 
 struct hci_state {
 	int device_id;
@@ -128,7 +133,7 @@ void error_check_and_exit(struct hci_state current_hci_state)
 	if (current_hci_state.has_error)
 	{
 		std::cout << "ERROR: " << current_hci_state.error_message << std::endl;
-		exit(1);
+		//exit(1);
 	}
 }
 
@@ -153,12 +158,14 @@ void my_handler(int s) {
 		close_hci_device(current_hci_state);
 	}
 
-	exit(1);
+	//exit(1);
 }
 
 
 void scan_service(){
 
+    /*
+    // don't want this stuff because inside thread
     struct sigaction sigIntHandler;
 
 	sigIntHandler.sa_handler = my_handler;
@@ -166,6 +173,7 @@ void scan_service(){
 	sigIntHandler.sa_flags = 0;
 
 	sigaction(SIGINT, &sigIntHandler, NULL);
+    */
 
 	current_hci_state = open_default_hci_device();
 
@@ -179,7 +187,8 @@ void scan_service(){
 
 	std::cout << "Scanning..." << std::endl;
 
-	int done = 0;
+	// for whatever reason, need to reset done inside here
+	done = 0;
 	int error = 0;
 	while (!done && !error)
 	{
@@ -249,11 +258,4 @@ void scan_service(){
 	close_hci_device(current_hci_state);
 
 	//return 0;
-}
-
-
-int main(void){
-    scan_service();
-
-    return 0;
 }

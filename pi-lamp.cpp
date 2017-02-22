@@ -6,6 +6,10 @@ const int DILLON_BIT  = 0b01; // bit 0 is the state of Dillon's lamp
 const int SARA_BIT  = 0b10;   // bit 1 is the state of Sara's lamp
 int lampState = 0b00;   // stores the state of both lamps
 
+// create global thread for status
+// global required because killing from a function
+std::thread thread(scan_service);
+
 int main(void) {
     // pin 3 is really GPIO 22 on the Pi
     int PIN = 3;            // 433 Mhz transmitter
@@ -33,9 +37,6 @@ int main(void) {
     pullUpDnControl(dillonLamp, PUD_UP);
     pinMode(saraLamp, INPUT);
     pullUpDnControl(saraLamp, PUD_UP);
-
-    // create thread for status
-    std::thread thread(scan_service);
 
     int oldState = getSwitchState();
     int newState = oldState;
@@ -65,7 +66,7 @@ int main(void) {
         }
 
         if(dillonClicks == 3){
-           //printf("TRIPLE click\n");
+            //printf("TRIPLE click\n");
             toggleLight();
         }
 
@@ -108,9 +109,6 @@ int main(void) {
 
         delay(5);
     }
-
-    // kill the scanner and thread
-    //setStatus(kill_it);
 
     // RESOURCE ACQUISITION IS INITIALIZATION allows us to call detach()
     // in the case of exceptions
@@ -192,8 +190,13 @@ void matchToggle(LampOwners owner, RCSwitch mySwitch){
 
 /* toggles the overhead light using a Switchmate */
 void toggleLight(void){
-    // need to kill scanner before connecting to switchmate w/ bluetooth
-    //setStatus(stop);
+    // need to kill scanner before connecting to Switchmate w/ bluetooth
+    cancelScan();
+    // wait for thread to terminate
+    if(thread.joinable())
+    {
+        thread.join();
+    }
 
     // if on, turn off
     if (getSwitchState()){
@@ -205,5 +208,5 @@ void toggleLight(void){
     }
 
     // start scanner again
-    //setStatus(start);
+    thread = std::thread(scan_service);
 }
