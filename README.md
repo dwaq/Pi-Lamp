@@ -1,7 +1,7 @@
 Pi-Lamp
 ==========
 
-Uses a Raspberry Pi 3 and a 433 Mhz transmitter to wirelessly control lamps.
+Uses a Raspberry Pi 3 to wirelessly control lamps with Philips Hue lightbulbs.
 
 Two buttons connected as inputs toggle two individual lamps.
 
