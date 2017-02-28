@@ -18,12 +18,6 @@ int main(void) {
 
     if (wiringPiSetup () == -1) return 1;
 
-    RCSwitch mySwitch = RCSwitch();
-    // setup the transmitter on pin 3
-    mySwitch.enableTransmit(PIN);
-    // Set pulse length of a bit
-    mySwitch.setPulseLength(PULSE_LENGTH);
-
     // set up the Click Button object
     ClickButton dillonButton(dillonLamp, LOW, CLICKBTN_PULLUP);
     ClickButton saraButton(saraLamp, LOW, CLICKBTN_PULLUP);
@@ -57,12 +51,12 @@ int main(void) {
 
         if(dillonClicks == 1){
             //printf("SINGLE click\n");
-            toggleDillon(mySwitch);
+            toggleDillon();
         }
 
         if(dillonClicks == 2){
             //printf("DOUBLE click\n");
-            toggleSara(mySwitch);
+            toggleSara();
         }
 
         if(dillonClicks == 3){
@@ -72,7 +66,7 @@ int main(void) {
 
         if(dillonClicks == -1){
             //printf("SINGLE LONG click\n");
-            matchToggle(dillon, mySwitch);
+            matchToggle(dillon);
         }
 
         // reset counter for next round
@@ -86,12 +80,12 @@ int main(void) {
 
         if(saraClicks == 1){
             //printf("SINGLE click\n");
-            toggleSara(mySwitch);
+            toggleSara();
         }
 
         if(saraClicks == 2){
             //printf("DOUBLE click\n");
-            toggleDillon(mySwitch);
+            toggleDillon();
         }
 
         if(saraClicks == 3){
@@ -101,7 +95,7 @@ int main(void) {
 
         if(saraClicks == -1){
             //printf("SINGLE LONG click\n");
-            matchToggle(sara, mySwitch);
+            matchToggle(sara);
         }
 
         // reset counter for next round
@@ -119,55 +113,55 @@ int main(void) {
 
 
 /* toggle Dillon's lamp */
-void toggleDillon(RCSwitch mySwitch){
+void toggleDillon(void){
     // toggle the state of Dillon's lamp
     lampState ^= DILLON_BIT;
 
     // send new state
     if ((lampState & DILLON_BIT) == DILLON_BIT){
         //turn on Dillon's lamp
-        mySwitch.send(DILLON_ON, BIT_LENGTH);
+        dillonOn();
     }
     else{
         // turn off Dillon's lamp
-        mySwitch.send(DILLON_OFF, BIT_LENGTH);
+        dillonOff();
     }
 }
 
 /* toggle Sara's lamp */
-void toggleSara(RCSwitch mySwitch){
+void toggleSara(void){
     // toggle the state of Sara's lamp
     lampState ^= SARA_BIT;
 
     // send new state
     if ((lampState & SARA_BIT) == SARA_BIT){
         // turn on Sara's lamp
-        mySwitch.send(SARA_ON, BIT_LENGTH);
+        saraOn();
     }
     else{
         // turn off Sara's lamp
-        mySwitch.send(SARA_OFF, BIT_LENGTH);
+        saraOff();
     }
 }
 
 /* set both lamps to a new state */
-void switchLamps(boolean on, RCSwitch mySwitch){
+void switchLamps(boolean on){
     if(on){
         // turn both lamps on
-        mySwitch.send(SARA_ON, BIT_LENGTH);
-        mySwitch.send(DILLON_ON, BIT_LENGTH);
+        saraOn();
+        dillonOn();
         lampState = 0b11;
     }
     else{
         // turn both lamps off
-        mySwitch.send(DILLON_OFF, BIT_LENGTH);
-        mySwitch.send(SARA_OFF, BIT_LENGTH);
+        dillonOff();
+        saraOff();
         lampState = 0b00;
     }
 }
 
 /* set both lamps to the opposite of the button's lamp's current state */
-void matchToggle(LampOwners owner, RCSwitch mySwitch){
+void matchToggle(LampOwners owner){
     int buttonBit;
 
     // decide which button to check
@@ -180,11 +174,11 @@ void matchToggle(LampOwners owner, RCSwitch mySwitch){
 
     // currently on, so turn both off
     if ((lampState & buttonBit) == buttonBit){
-        switchLamps(false, mySwitch);
+        switchLamps(false);
     }
     // currently off, so turn both on
     else {
-        switchLamps(true, mySwitch);
+        switchLamps(true);
     }
 }
 
