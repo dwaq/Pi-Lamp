@@ -44,6 +44,14 @@ int main(void) {
         newState = getSwitchState();
         if (oldState != newState) {
             printf("Switchmate state changed to: %i\n", newState);
+
+            // switch lamps to match Switchmate
+            if (newState == 1){
+                switchLamps(true);
+            }
+            else {
+                switchLamps(false);
+            }
         }
         oldState = newState;
 
