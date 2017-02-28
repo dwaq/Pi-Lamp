@@ -1,8 +1,8 @@
 CXX=g++
 CXXFLAGS=-I. -std=c++11 -pthread
 
-DEPS=pi-lamp.h status.h clickButton/clickButton.h RCSwitch/RCSwitch.h
-OBJS=pi-lamp.o status.o clickButton/clickButton.o RCSwitch/RCSwitch.o
+DEPS=pi-lamp.h status.h clickButton/clickButton.h
+OBJS=pi-lamp.o status.o clickButton/clickButton.o
 
 LIBS=-lwiringPi -lbluetooth
 
