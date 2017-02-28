@@ -179,10 +179,20 @@ void matchToggle(LampOwners owner){
     // currently on, so turn both off
     if ((lampState & buttonBit) == buttonBit){
         switchLamps(false);
+
+        // toggle switchmate if not off
+        if (getSwitchState() != 0){
+            toggleLight();
+        }
     }
     // currently off, so turn both on
     else {
         switchLamps(true);
+
+        // toggle switchmate if not on
+        if (getSwitchState() != 1){
+            toggleLight();
+        }
     }
 }
 
