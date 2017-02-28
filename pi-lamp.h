@@ -54,6 +54,7 @@ int lampStatus(LampOwners owner){
 void switchLamp(LampOwners owner, boolean on){
     CURL *curl;
     CURLcode res;
+    std::string readBuffer;
 
     struct curl_slist *headers=NULL;
 
@@ -82,6 +83,11 @@ void switchLamp(LampOwners owner, boolean on){
         else {
             curl_easy_setopt(curl, CURLOPT_POSTFIELDS, "{\"on\":false}");
         }
+
+        // redirect the response to a buffer
+        curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, WriteCallback);
+        curl_easy_setopt(curl, CURLOPT_WRITEDATA, &readBuffer);
+
         res = curl_easy_perform(curl);
         /* Check for errors */
         if(res != CURLE_OK)
@@ -89,6 +95,9 @@ void switchLamp(LampOwners owner, boolean on){
 
         curl_slist_free_all(headers);
         curl_easy_cleanup(curl);
+
+        // print only the important part ("true" or "false") " " ("success" or "failure")
+        std::cout << "Lamp switch to " << readBuffer.substr(34, 4) << " " << readBuffer.substr(3, 7) << std::endl;
     }
 }
 
