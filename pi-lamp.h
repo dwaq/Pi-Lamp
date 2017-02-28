@@ -2,12 +2,54 @@
 #include <curl/curl.h>
 #include <wiringPi.h>
 #include <stdio.h>
+#include <iostream>
+#include <string>
+
+// http://stackoverflow.com/a/9786295
+static size_t WriteCallback(void *contents, size_t size, size_t nmemb, void *userp)
+{
+    ((std::string*)userp)->append((char*)contents, size * nmemb);
+    return size * nmemb;
+}
 
 // arguments for matchToggle
 typedef enum {
     dillon,
     sara
 } LampOwners;
+
+// 1 == on
+// 0 == off
+int lampStatus(LampOwners owner){
+    CURL *curl;
+    CURLcode res;
+    std::string readBuffer;
+    std::string statusOn ("true");
+
+    curl = curl_easy_init();
+    if(curl) {
+        // set options based on owner
+        if (owner == dillon){
+            curl_easy_setopt(curl, CURLOPT_URL, "philips-hue/api/29ocf3mMaJ1XAtbqeKM60A4dFen9tSc96u1JuQAi/lights/4");
+        }
+        else if (owner == sara){
+            curl_easy_setopt(curl, CURLOPT_URL, "philips-hue/api/29ocf3mMaJ1XAtbqeKM60A4dFen9tSc96u1JuQAi/lights/3");
+        }
+        curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, WriteCallback);
+        curl_easy_setopt(curl, CURLOPT_WRITEDATA, &readBuffer);
+        res = curl_easy_perform(curl);
+        curl_easy_cleanup(curl);
+
+        // compares the 15-18th characters of readBuffer (the response)
+        // which is either "true" or "false"
+        // to statusOn which is "true"
+        // 0 if they're the same, 1 if they're different
+        // which is inverse of what we want
+        // return 1 if matches "true" (0)
+        // return 0 if doesn't match "true" (1)
+        return statusOn.compare(readBuffer.substr(15, 4))? 0 : 1;
+    }
+}
 
 void switchLamp(LampOwners owner, boolean on){
     CURL *curl;

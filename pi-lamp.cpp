@@ -32,6 +32,10 @@ int main(void) {
     pinMode(saraLamp, INPUT);
     pullUpDnControl(saraLamp, PUD_UP);
 
+    // get lamp status at startup
+    lampState = (lampStatus(sara) << 1) | lampStatus(dillon);
+
+    // get light switch status at startup
     int oldState = getSwitchState();
     int newState = oldState;
 
