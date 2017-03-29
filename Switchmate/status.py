@@ -25,27 +25,8 @@ class ScanDelegate(DefaultDelegate):
         if (dev.getValueText(AD_TYPE_UUID) == SWITCHMATE_UUID):
             data = dev.getValueText(AD_TYPE_SERVICE_DATA)
             # the bit at 0x0100 signifies if the switch is off or on
-            status = str((int(data, 16) >> 8) & 1)
+            print "Switchmate status:", str((int(data, 16) >> 8) & 1)
 
-            # Create a UDS socket
-            sock = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
-
-            # Connect the socket to the port where the server is listening
-            server_address = '/tmp/pi-lamp-status'
-            print >>sys.stderr, 'connecting to %s' % server_address
-            try:
-                sock.connect(server_address)
-            except socket.error, msg:
-                print >>sys.stderr, msg
-                sys.exit(1)
-
-            try:
-                # Send data
-                print >>sys.stderr, 'sending "%s"' % status
-                sock.sendall(status)
-            finally:
-                print >>sys.stderr, 'closing socket'
-                sock.close()
 
 if __name__ == '__main__':
   #print('Looking for switchmate status...')
