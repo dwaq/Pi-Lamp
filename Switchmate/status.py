@@ -1,11 +1,11 @@
 #! /usr/bin/env python
 
-"""switchmate.py
+"""status.py
 
 A python-based command line utility for reading the status of Switchmate switches
 
 Usage:
-    ./status.py
+    sudo ./status.py
 """
 
 import socket
