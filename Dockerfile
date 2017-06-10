@@ -7,7 +7,7 @@ ENV INITSYSTEM on
 RUN apt-get -q update && apt-get install -yq --no-install-recommends \
 	build-essential \
 	git-core \
-	curl \
+	curl libcurl3 \
 	&& apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # install WiringPi
