@@ -6,6 +6,7 @@ ENV INITSYSTEM on
 # install tools for C
 RUN apt-get -q update && apt-get install -yq --no-install-recommends \
 	build-essential \
+	git-core \
 	&& apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # install WiringPi
