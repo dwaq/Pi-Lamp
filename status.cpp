@@ -137,7 +137,7 @@ void error_check_and_exit(struct hci_state current_hci_state)
 	}
 }
 
-void process_data(uint8_t *data, size_t data_len, le_advertising_info *info)
+void process_data(uint8_t *data, size_t data_len)
 {
     if (data_len > 0)
     {
@@ -242,7 +242,7 @@ void scan_service(){
 				}
 				else
 				{
-					process_data((uint8_t *)(((uint8_t *)&info->data) + current_index + 1), data_len, info);
+					process_data((uint8_t *)(((uint8_t *)&info->data) + current_index + 1), data_len);
 					current_index += data_len + 1;
 				}
 			}
