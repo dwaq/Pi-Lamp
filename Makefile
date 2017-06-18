@@ -1,5 +1,5 @@
 CXX=g++
-CXXFLAGS=-I. -std=c++11 -pthread
+CXXFLAGS=-I. -std=c++11 -pthread -Werror -Wall -Wextra
 
 DEPS=pi-lamp.h status.h clickButton/clickButton.h
 OBJS=pi-lamp.o status.o clickButton/clickButton.o
