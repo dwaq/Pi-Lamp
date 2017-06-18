@@ -11,8 +11,6 @@ int lampState = 0b00;   // stores the state of both lamps
 std::thread thread(scan_service);
 
 int main(void) {
-    // pin 3 is really GPIO 22 on the Pi
-    int PIN = 3;            // 433 Mhz transmitter
     int dillonLamp = 23;    // Dillon's lamp switch
     int saraLamp = 21;      // Sara's lamp switch
 
