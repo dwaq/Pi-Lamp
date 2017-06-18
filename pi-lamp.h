@@ -52,6 +52,8 @@ int lampStatus(LampOwners owner){
         // return 0 if doesn't match "true" (1)
         return statusOn.compare(readBuffer.substr(15, 4))? 0 : 1;
     }
+    // error!
+    return -1;
 }
 
 void switchLamp(LampOwners owner, boolean on){
