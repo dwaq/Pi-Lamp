@@ -30,7 +30,7 @@ struct hci_state current_hci_state;
 
 struct hci_state open_default_hci_device()
 {
-	struct hci_state current_hci_state = {0};
+	struct hci_state current_hci_state;
 
 	current_hci_state.device_id = hci_get_route(NULL);
 
