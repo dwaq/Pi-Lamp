@@ -38,6 +38,9 @@ int lampStatus(LampOwners owner){
         curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, WriteCallback);
         curl_easy_setopt(curl, CURLOPT_WRITEDATA, &readBuffer);
         res = curl_easy_perform(curl);
+        /* Check for errors */
+        if(res != CURLE_OK)
+            fprintf(stderr, "GET request failed: %s\n", curl_easy_strerror(res));
         curl_easy_cleanup(curl);
 
         // compares the 15-18th characters of readBuffer (the response)
