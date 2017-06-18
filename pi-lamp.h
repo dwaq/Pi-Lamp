@@ -83,7 +83,8 @@ void switchLamp(LampOwners owner, boolean on){
         curl_easy_setopt(curl, CURLOPT_CUSTOMREQUEST, "PUT");
 
         if (on){
-            curl_easy_setopt(curl, CURLOPT_POSTFIELDS, "{\"on\":true}");
+            // when turning on, set to full brightness
+            curl_easy_setopt(curl, CURLOPT_POSTFIELDS, "{\"on\":true, \"bri\":254}");
         }
         else {
             curl_easy_setopt(curl, CURLOPT_POSTFIELDS, "{\"on\":false}");
