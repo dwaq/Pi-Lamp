@@ -1,4 +1,5 @@
 #include "clickButton/clickButton.h"
+#include "ArduinoJson/src/ArduinoJson.h"
 #include <curl/curl.h>
 #include <wiringPi.h>
 #include <stdio.h>
@@ -43,6 +44,12 @@ int lampStatus(LampOwners owner){
             fprintf(stderr, "GET request failed: %s\n", curl_easy_strerror(res));
         curl_easy_cleanup(curl);
 
+        StaticJsonBuffer<200> jsonBuffer;
+
+        JsonObject& root = jsonBuffer.parseObject(readBuffer);
+
+        const char* state = root["state"]["on"];
+
         // compares the 15-18th characters of readBuffer (the response)
         // which is either "true" or "false"
         // to statusOn which is "true"
@@ -50,7 +57,7 @@ int lampStatus(LampOwners owner){
         // which is inverse of what we want
         // return 1 if matches "true" (0)
         // return 0 if doesn't match "true" (1)
-        return statusOn.compare(readBuffer.substr(15, 4))? 0 : 1;
+        return statusOn.compare(state)? 0 : 1;
     }
     // error!
     return -1;
