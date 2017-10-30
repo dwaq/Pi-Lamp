@@ -44,11 +44,26 @@ int lampStatus(LampOwners owner){
             fprintf(stderr, "GET request failed: %s\n", curl_easy_strerror(res));
         curl_easy_cleanup(curl);
 
-        StaticJsonBuffer<200> jsonBuffer;
+        //std::cout << readBuffer << std::endl;
 
-        JsonObject& root = jsonBuffer.parseObject(readBuffer);
+        StaticJsonBuffer<500> jsonBuffer;
 
-        const char* state = root["state"]["on"];
+        //const char *cstr = readBuffer.c_str();
+        //const char *cstr = "{\"state\":{\"on\":true,\"bri\":254,\"alert\":\"none\",\"reachable\":true},\"type\":\"Dimmable light\",\"name\":\"Sara\",\"modelid\":\"LWB004\",\"manufacturername\":\"Philips\",\"uniqueid\":\"00:17:88:01:00:d5:8f:48-0b\",\"swversion\":\"5.38.2.19136\"}";
+        //const char *cstr = "{\"state\":{\"on\":\"true\",\"bri\":\"254\",\"alert\":\"none\",\"reachable\":\"true\"},\"type\":\"Dimmable light\",\"name\":\"Sara\",\"modelid\":\"LWB004\",\"manufacturername\":\"Philips\",\"uniqueid\":\"00:17:88:01:00:d5:8f:48-0b\",\"swversion\":\"5.38.2.19136\"}";
+        const char *cstr = "{\"type\":\"Dimmable light\",\"name\":\"Sara\",\"modelid\":\"LWB004\",\"manufacturername\":\"Philips\",\"uniqueid\":\"00:17:88:01:00:d5:8f:48-0b\",\"swversion\":\"5.38.2.19136\"}";
+
+        std::cout << cstr << std::endl;
+        JsonObject& root = jsonBuffer.parseObject(cstr);
+
+        if (!root.success()) {
+            std::cerr << "parseObject() failed" << std::endl << std::endl;
+            return 1;
+          }
+
+        const char* state = root["type"];
+
+        std::cout << state << std::endl;
 
         // compares the 15-18th characters of readBuffer (the response)
         // which is either "true" or "false"
@@ -57,7 +72,7 @@ int lampStatus(LampOwners owner){
         // which is inverse of what we want
         // return 1 if matches "true" (0)
         // return 0 if doesn't match "true" (1)
-        return statusOn.compare(state)? 0 : 1;
+        return statusOn.compare(readBuffer.substr(15, 4))? 0 : 1;
     }
     // error!
     return -1;
