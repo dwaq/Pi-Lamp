@@ -158,14 +158,12 @@ void toggleSara(void){
 void switchLamps(boolean on){
     if(on){
         // turn both lamps on
-        saraOn();
-        dillonOn();
+        bothOn();
         lampState = 0b11;
     }
     else{
         // turn both lamps off
-        dillonOff();
-        saraOff();
+        bothOff();
         lampState = 0b00;
     }
 }

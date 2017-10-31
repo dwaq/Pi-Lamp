@@ -16,7 +16,8 @@ static size_t WriteCallback(void *contents, size_t size, size_t nmemb, void *use
 // arguments for matchToggle
 typedef enum {
     dillon,
-    sara
+    sara,
+    both
 } LampOwners;
 
 // 1 == on
@@ -90,6 +91,10 @@ void switchLamp(LampOwners owner, boolean on){
         else if (owner == sara){
             std::cout << "Switching Sara's lamp: ";
             curl_easy_setopt(curl, CURLOPT_URL, "philips-hue/api/29ocf3mMaJ1XAtbqeKM60A4dFen9tSc96u1JuQAi/lights/3/state");
+        }
+        else if (owner == both){
+            std::cout << "Switching both lamps: ";
+            curl_easy_setopt(curl, CURLOPT_URL, "philips-hue/api/29ocf3mMaJ1XAtbqeKM60A4dFen9tSc96u1JuQAi/groups/1/action");
         }
         else{
             return;
@@ -175,6 +180,12 @@ void saraOn(void){
 };
 void saraOff(void){
     switchLamp(sara, false);
+};
+void bothOn(void){
+    switchLamp(both, true);
+};
+void bothOff(void){
+    switchLamp(both, false);
 };
 
 void toggleDillon(void);
