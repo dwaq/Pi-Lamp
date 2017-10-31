@@ -32,7 +32,7 @@ int main(void) {
         // print state change
         newState = getSwitchState();
         if (oldState != newState) {
-            printf("Switchmate state changed to: %i\n", newState);
+            std::cout << "Switchmate state changed to: " << newState << std::endl;
 
             // switch lamps to match Switchmate
             if (newState == 1){
