@@ -6,7 +6,7 @@
 #include <iostream>
 #include <stdbool.h>
 
-// arguments for matchToggle
+// arguments for controlling a particular light
 typedef enum {
     dillon,
     sara,
