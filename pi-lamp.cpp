@@ -1,5 +1,6 @@
 #include "pi-lamp.h"
 #include "status.h"
+#include "hue/hue.h"
 
 // create global thread for status
 // global required because killing from a function
@@ -37,10 +38,10 @@ int main(void) {
 
             // switch lamps to match Switchmate
             if (newState == 1){
-                switchLamps(true);
+                switchBoth(true);
             }
             else {
-                switchLamps(false);
+                switchBoth(false);
             }
         }
         oldState = newState;
@@ -114,45 +115,7 @@ int main(void) {
 }
 
 
-/* read status of Dillon's lamp and toggle*/
-void toggleDillon(void){
-    // if off,
-    if (lampStatus(dillon) == 0){
-        //turn on Dillon's lamp
-        dillonOn();
-    }
-    // if on,
-    else{
-        // turn off Dillon's lamp
-        dillonOff();
-    }
-}
 
-/* read status of Sara's lamp and toggle */
-void toggleSara(void){
-    // if off,
-    if (lampStatus(sara) == 0){
-        // turn on Sara's lamp
-        saraOn();
-    }
-    // if on,
-    else{
-        // turn off Sara's lamp
-        saraOff();
-    }
-}
-
-/* set both lamps to a new state */
-void switchLamps(boolean on){
-    if(on){
-        // turn both lamps on
-        bothOn();
-    }
-    else{
-        // turn both lamps off
-        bothOff();
-    }
-}
 
 /* set both lamps to the opposite of the button's lamp's current state */
 /*
