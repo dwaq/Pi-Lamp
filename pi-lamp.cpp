@@ -51,22 +51,22 @@ int main(void) {
         if (dillonButton.clicks != 0) dillonClicks = dillonButton.clicks;
 
         if(dillonClicks == 1){
-            //printf("SINGLE click\n");
+            std::cout << "SINGLE clicked Dillon's button." << std::endl;
             toggleDillon();
         }
 
         if(dillonClicks == 2){
-            //printf("DOUBLE click\n");
+            std::cout << "DOUBLE clicked Dillon's button." << std::endl;
             toggleSara();
         }
 
         if(dillonClicks == 3){
-            //printf("TRIPLE click\n");
+            std::cout << "TRIPLE clicked Dillon's button." << std::endl;
             toggleLight();
         }
         /*
         if(dillonClicks == -1){
-            //printf("SINGLE LONG click\n");
+            std::cout << "SINGLE LONG clicked Dillon's button." << std::endl;
             matchToggle(dillon);
         }
         */
@@ -80,22 +80,22 @@ int main(void) {
         if (saraButton.clicks != 0) saraClicks = saraButton.clicks;
 
         if(saraClicks == 1){
-            //printf("SINGLE click\n");
+            std::cout << "SINGLE clicked Sara's button." << std::endl;
             toggleSara();
         }
 
         if(saraClicks == 2){
-            //printf("DOUBLE click\n");
+            std::cout << "DOUBLE clicked Sara's button." << std::endl;
             toggleDillon();
         }
 
         if(saraClicks == 3){
-            //printf("TRIPLE click\n");
+            std::cout << "TRIPLE clicked Sara's button." << std::endl;
             toggleLight();
         }
         /*
         if(saraClicks == -1){
-            //printf("SINGLE LONG click\n");
+            std::cout << "SINGLE LONG clicked Sara's button." << std::endl;
             matchToggle(sara);
         }
         */
