@@ -1,4 +1,5 @@
 #include "hue.h"
+#include <iostream>
 
 // http://stackoverflow.com/a/9786295
 static size_t WriteCallback(void *contents, size_t size, size_t nmemb, void *userp)

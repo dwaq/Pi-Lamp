@@ -3,8 +3,6 @@
 
 #include <curl/curl.h>
 #include "../ArduinoJson/src/ArduinoJson.h"
-//#include <stdio.h>
-#include <iostream>
 #include <stdbool.h>
 
 // arguments for matchToggle
