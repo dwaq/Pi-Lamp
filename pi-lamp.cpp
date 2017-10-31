@@ -1,11 +1,6 @@
 #include "pi-lamp.h"
 #include "status.h"
 
-// the lamp's state is stored in a two bit binary number
-const int DILLON_BIT  = 0b01; // bit 0 is the state of Dillon's lamp
-const int SARA_BIT  = 0b10;   // bit 1 is the state of Sara's lamp
-int lampState = 0b00;   // stores the state of both lamps
-
 // create global thread for status
 // global required because killing from a function
 std::thread thread(scan_service);
@@ -29,9 +24,6 @@ int main(void) {
     pullUpDnControl(dillonLamp, PUD_UP);
     pinMode(saraLamp, INPUT);
     pullUpDnControl(saraLamp, PUD_UP);
-
-    // get lamp status at startup
-    lampState = (lampStatus(sara) << 1) | lampStatus(dillon);
 
     // get light switch status at startup
     int oldState = getSwitchState();
@@ -155,12 +147,10 @@ void switchLamps(boolean on){
     if(on){
         // turn both lamps on
         bothOn();
-        lampState = 0b11;
     }
     else{
         // turn both lamps off
         bothOff();
-        lampState = 0b00;
     }
 }
 
