@@ -161,11 +161,11 @@ void toggleLight(void){
 
     // if on, turn off
     if (getSwitchState()){
-        system("./Switchmate/off.sh");
+        system("./switchmate/off.sh");
     }
     // if off, turn on
     else {
-        system("./Switchmate/on.sh");
+        system("./switchmate/on.sh");
     }
 
     // start scanner again
