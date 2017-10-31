@@ -15,4 +15,4 @@ pi-lamp: $(OBJS)
 	$(CXX) $(CXXFLAGS) $(LDFLAGS) $+ -o $@ $(LIBS)
 
 clean:
-	$(RM) *.o pi-lamp
+	$(RM) $(OBJS) pi-lamp
