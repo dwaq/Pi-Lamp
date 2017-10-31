@@ -122,32 +122,28 @@ int main(void) {
 }
 
 
-/* toggle Dillon's lamp */
+/* read status of Dillon's lamp and toggle*/
 void toggleDillon(void){
-    // toggle the state of Dillon's lamp
-    lampState ^= DILLON_BIT;
-
-    // send new state
-    if ((lampState & DILLON_BIT) == DILLON_BIT){
+    // if off,
+    if (lampStatus(dillon) == 0){
         //turn on Dillon's lamp
         dillonOn();
     }
+    // if on,
     else{
         // turn off Dillon's lamp
         dillonOff();
     }
 }
 
-/* toggle Sara's lamp */
+/* read status of Sara's lamp and toggle */
 void toggleSara(void){
-    // toggle the state of Sara's lamp
-    lampState ^= SARA_BIT;
-
-    // send new state
-    if ((lampState & SARA_BIT) == SARA_BIT){
+    // if off,
+    if (lampStatus(sara) == 0){
         // turn on Sara's lamp
         saraOn();
     }
+    // if on,
     else{
         // turn off Sara's lamp
         saraOff();
