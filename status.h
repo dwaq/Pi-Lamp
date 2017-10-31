@@ -4,23 +4,12 @@
 // for threads
 #include <thread>
 
-// for unix sockets
-#include <sys/socket.h>
-#include <unistd.h>
-#include <sys/un.h>
-
 // for standard I/O
-#include <stdlib.h>
-#include <stdio.h>
 #include <iostream>
 
 // for bluetooth library
-//#include <stdlib.h>
-#include <errno.h>
-//#include <unistd.h>
+#include <unistd.h>
 #include <sys/ioctl.h>
-//#include <iostream>
-#include <signal.h>
 
 // for bluetooth
 #include <bluetooth/bluetooth.h>
@@ -32,8 +21,6 @@
 #define HCI_STATE_OPEN       2
 #define HCI_STATE_SCANNING   3
 #define HCI_STATE_FILTERING  4
-
-
 
 #define EIR_FLAGS                   0X01
 #define EIR_NAME_SHORT              0x08
