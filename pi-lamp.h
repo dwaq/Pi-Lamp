@@ -84,9 +84,11 @@ void switchLamp(LampOwners owner, boolean on){
 
         // set options based on owner
         if (owner == dillon){
+            std::cout << "Switching Dillon's lamp: ";
             curl_easy_setopt(curl, CURLOPT_URL, "philips-hue/api/29ocf3mMaJ1XAtbqeKM60A4dFen9tSc96u1JuQAi/lights/4/state");
         }
         else if (owner == sara){
+            std::cout << "Switching Sara's lamp: ";
             curl_easy_setopt(curl, CURLOPT_URL, "philips-hue/api/29ocf3mMaJ1XAtbqeKM60A4dFen9tSc96u1JuQAi/lights/3/state");
         }
         else{
@@ -114,8 +116,48 @@ void switchLamp(LampOwners owner, boolean on){
         curl_slist_free_all(headers);
         curl_easy_cleanup(curl);
 
-        // print only the important part ("true" or "false") " " ("success" or "failure")
-        std::cout << "Lamp switch to " << readBuffer.substr(34, 4) << " " << readBuffer.substr(3, 7) << std::endl;
+        DynamicJsonBuffer jsonBuffer;
+
+        // this time it is an array
+        JsonArray& root = jsonBuffer.parseArray(readBuffer);
+
+        if (!root.success()) {
+            std::cerr << "JSON parse failed" << std::endl;
+        }
+
+        // first object [0] in array is on/off state
+        // second (when turning on) is the brightness it was set to (ignoring)
+        JsonObject& object0 = root[0];
+
+        // read first key
+        for (JsonPair& pair : object0)
+        {
+            // success or error
+            std::cout << pair.key;
+
+            // set up new object for that key
+            JsonObject& objectStatus = object0[pair.key];
+
+            // if success:
+            if (strcmp(pair.key, "success") == 0){
+                // read second key
+                for (JsonPair& pair : objectStatus)
+                {
+                    // true or false (on or off)
+                    if (pair.value)
+                    {
+                        std::cout << ". Light is now on." << std::endl;
+                    }
+                    else{
+                        std::cout << ". Light is now off." << std::endl;
+                    }
+                }
+            }
+            // else is error:
+            else{
+                std::cout << "! " << objectStatus["description"] << std::endl;
+            }
+        }
     }
 }
 
