@@ -112,9 +112,6 @@ int main(void) {
     return 0;
 }
 
-
-
-
 /* set both lamps to the opposite of the button's lamp's current state */
 /*
 void matchToggle(LampOwners owner){
