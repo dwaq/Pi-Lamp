@@ -188,7 +188,7 @@ void scan_service(){
 
 	error_check_and_exit(current_hci_state);
 
-	std::cout << "Scanning..." << std::endl;
+	std::cout << "Scanning for Switchmate state..." << std::endl;
 
 	// for whatever reason, need to reset done inside here
 	done = 0;
