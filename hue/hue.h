@@ -2,7 +2,7 @@
 #define __HUE_H__
 
 #include <curl/curl.h>
-#include "../ArduinoJson/src/ArduinoJson.h"
+#include "ArduinoJson/src/ArduinoJson.h"
 #include <iostream>
 #include <stdbool.h>
 
