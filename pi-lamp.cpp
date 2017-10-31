@@ -1,6 +1,4 @@
 #include "pi-lamp.h"
-#include "switchmate/switchmate.h"
-#include "hue/hue.h"
 
 // create global thread for status
 // global required because killing from a function

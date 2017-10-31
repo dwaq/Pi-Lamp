@@ -3,6 +3,7 @@
 
 #include <wiringPi.h>
 #include "clickButton/clickButton.h"
+#include "switchmate/switchmate.h"
 #include "hue/hue.h"
 
 //void matchToggle(LampOwners owner);
