@@ -1,5 +1,5 @@
-#ifndef __STATUS_H__
-#define __STATUS_H__
+#ifndef __SWITCHMATE_H__
+#define __SWITCHMATE_H__
 
 // for threads
 #include <thread>

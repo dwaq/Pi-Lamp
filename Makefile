@@ -1,8 +1,8 @@
 CXX=g++
 CXXFLAGS=-I. -std=c++11 -pthread -Werror -Wall -Wextra
 
-DEPS=pi-lamp.h status.h clickButton/clickButton.h hue/hue.h
-OBJS=pi-lamp.o status.o clickButton/clickButton.o hue/hue.o
+DEPS=pi-lamp.h clickButton/clickButton.h switchmate/switchmate.h hue/hue.h
+OBJS=pi-lamp.o clickButton/clickButton.o switchmate/switchmate.o hue/hue.o
 
 LIBS=-lwiringPi -lbluetooth -lcurl
 

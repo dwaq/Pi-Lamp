@@ -1,4 +1,4 @@
-#include "status.h"
+#include "switchmate.h"
 
 /* stores the state of the lightSwitch */
 // set to -1 so when it get a reading, it's different and prints out initial state
