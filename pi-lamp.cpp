@@ -73,12 +73,12 @@ int main(void) {
             //printf("TRIPLE click\n");
             toggleLight();
         }
-
+        /*
         if(dillonClicks == -1){
             //printf("SINGLE LONG click\n");
             matchToggle(dillon);
         }
-
+        */
         // reset counter for next round
         dillonClicks = 0;
 
@@ -102,12 +102,12 @@ int main(void) {
             //printf("TRIPLE click\n");
             toggleLight();
         }
-
+        /*
         if(saraClicks == -1){
             //printf("SINGLE LONG click\n");
             matchToggle(sara);
         }
-
+        */
         // reset counter for next round
         saraClicks = 0;
 
@@ -171,6 +171,7 @@ void switchLamps(boolean on){
 }
 
 /* set both lamps to the opposite of the button's lamp's current state */
+/*
 void matchToggle(LampOwners owner){
     int buttonBit;
 
@@ -201,6 +202,7 @@ void matchToggle(LampOwners owner){
         }
     }
 }
+*/
 
 /* toggles the overhead light using a Switchmate */
 void toggleLight(void){

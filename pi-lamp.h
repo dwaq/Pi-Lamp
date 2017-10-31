@@ -162,7 +162,7 @@ void switchLamp(LampOwners owner, boolean on){
 }
 
 
-void matchToggle(LampOwners owner);
+//void matchToggle(LampOwners owner);
 
 void dillonOn(void){
     switchLamp(dillon, true);
