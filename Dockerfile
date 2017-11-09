@@ -8,6 +8,7 @@ RUN apt-get -q update && apt-get install -yq --no-install-recommends \
 	build-essential \
 	git-core \
 	libcurl4-gnutls-dev \
+	bluez bluez-firmware \
 	libbluetooth3 libbluetooth3-dbg libbluetooth-dev libglib2.0-dev \
 	python python-pip \
 	&& apt-get clean && rm -rf /var/lib/apt/lists/*
