@@ -7,6 +7,7 @@ ENV INITSYSTEM on
 RUN apt-get -q update && apt-get install -yq --no-install-recommends \
 	build-essential \
 	git-core \
+	libnss-mdns \
 	libcurl4-gnutls-dev \
 	bluez bluez-firmware \
 	libbluetooth3 libbluetooth3-dbg libbluetooth-dev libglib2.0-dev \
