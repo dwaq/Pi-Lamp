@@ -21,9 +21,11 @@ RUN git clone git://git.drogon.net/wiringPi && \
 # install tools for Python
 RUN pip install docopt bluepy
 
+# copy all files in our root to the working directory
 COPY . /usr/src/app
 WORKDIR /usr/src/app
 
+# build application
 RUN make all
 
 CMD ./pi-lamp
