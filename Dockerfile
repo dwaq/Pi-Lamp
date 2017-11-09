@@ -28,5 +28,8 @@ WORKDIR /usr/src/app
 # build application
 RUN make all
 
+# make hciconfig executable
+RUN ["chmod", "+x", "hciconfig.sh"]
+
 # connect to bluetooth, then start application if successful
 CMD ./hciconfig.sh && ./pi-lamp
