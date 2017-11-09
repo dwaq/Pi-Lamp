@@ -9,6 +9,7 @@ RUN apt-get -q update && apt-get install -yq --no-install-recommends \
 	git-core \
 	libcurl4-gnutls-dev \
 	libbluetooth3 libbluetooth3-dbg libbluetooth-dev \
+	python \
 	&& apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # install WiringPi
