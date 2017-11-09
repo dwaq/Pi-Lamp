@@ -7,7 +7,7 @@ ENV INITSYSTEM on
 RUN apt-get -q update && apt-get install -yq --no-install-recommends \
 	build-essential \
 	git-core \
-	libnss-mdns \
+	avahi-daemon avahi-utils libnss-mdns \
 	libcurl4-gnutls-dev \
 	bluez bluez-firmware \
 	libbluetooth3 libbluetooth3-dbg libbluetooth-dev libglib2.0-dev \
@@ -30,7 +30,8 @@ WORKDIR /usr/src/app
 RUN make all
 
 # resolve hosts from the .local domain
-RUN ["mv", "nsswitch.conf", "/etc/nsswitch.conf"]
+RUN systemctl enable avahi-daemon
+COPY nsswitch.conf /etc/nsswitch.conf
 
 # make hciconfig executable
 RUN ["chmod", "+x", "hciconfig.sh"]
