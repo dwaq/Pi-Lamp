@@ -29,6 +29,9 @@ WORKDIR /usr/src/app
 # build application
 RUN make all
 
+# resolve hosts from the .local domain
+RM ["mv", "nsswitch.conf", "/etc/nsswitch.conf"]
+
 # make hciconfig executable
 RUN ["chmod", "+x", "hciconfig.sh"]
 
