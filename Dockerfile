@@ -30,7 +30,7 @@ WORKDIR /usr/src/app
 RUN make all
 
 # resolve hosts from the .local domain
-RM ["mv", "nsswitch.conf", "/etc/nsswitch.conf"]
+RUN ["mv", "nsswitch.conf", "/etc/nsswitch.conf"]
 
 # make hciconfig executable
 RUN ["chmod", "+x", "hciconfig.sh"]
