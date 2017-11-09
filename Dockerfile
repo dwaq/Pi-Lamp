@@ -28,7 +28,5 @@ WORKDIR /usr/src/app
 # build application
 RUN make all
 
-# connect to bluetooth
-CMD ["bash", "hciconfig.sh"]
-
-CMD ./pi-lamp
+# connect to bluetooth, then start application if successful
+CMD ./hciconfig.sh && ./pi-lamp
