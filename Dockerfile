@@ -11,6 +11,7 @@ RUN apt-get -q update && apt-get install -yq --no-install-recommends \
 	bluez bluez-firmware \
 	libbluetooth3 libbluetooth3-dbg libbluetooth-dev libglib2.0-dev \
 	python python-pip \
+	avahi-utils libnss-mdns \
 	&& apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # install WiringPi
@@ -24,6 +25,9 @@ RUN pip install docopt bluepy
 # copy all files in our root to the working directory
 COPY . /usr/src/app
 WORKDIR /usr/src/app
+
+# use host dbus
+ENV DBUS_SYSTEM_BUS_ADDRESS=unix:path=/host/run/dbus/system_bus_socket
 
 # build application
 RUN make all
