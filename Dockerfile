@@ -12,6 +12,7 @@ RUN apt-get -q update && apt-get install -yq --no-install-recommends \
 	libbluetooth3 libbluetooth3-dbg libbluetooth-dev libglib2.0-dev \
 	python python-pip \
 	avahi-utils libnss-mdns \
+	iputils-ping \
 	&& apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # install WiringPi
