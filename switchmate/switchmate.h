@@ -31,6 +31,9 @@
 void setSwitchState(int state);
 int getSwitchState(void);
 
+void logSwitchmateData(int data);
+int readSwitchmateData(void);
+
 void cancelScan(void);
 
 void scan_service(void);
