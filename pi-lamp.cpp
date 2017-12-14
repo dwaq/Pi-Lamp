@@ -33,6 +33,7 @@ int main(void) {
         newState = getSwitchState();
         if (oldState != newState) {
             std::cout << "Switchmate state changed to: " << newState << std::endl;
+            std::cerr << "Switchmate data is: " << readSwitchmateData() << std::endl;
 
             // switch lamps to match Switchmate
             if (newState == 1){
