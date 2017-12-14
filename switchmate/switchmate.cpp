@@ -143,8 +143,8 @@ void process_data(uint8_t *data, size_t data_len)
     {
     	if (data[0] == SERVICE_DATA)
     	{
-    		// last bit of the 7th data piece is the Switchmate status
-            setSwitchState(int(data[7]) & 1);
+        // last bit of the 7th data piece is the Switchmate status
+        setSwitchState(int(data[7]) & 1);
     	}
     }
 }
