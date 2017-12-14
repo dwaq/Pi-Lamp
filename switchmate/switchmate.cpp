@@ -11,6 +11,16 @@ int getSwitchState(void){
     return switchState;
 }
 
+/* stores the state of the lightSwitch */
+int switchmateData = 0;
+
+void logSwitchmateData(int data){
+    switchmateData = data;
+}
+int readSwitchmateData(void){
+    return switchmateData;
+}
+
 // used to cancel the scan from main thread
 int done = 0;
 void cancelScan(void){
