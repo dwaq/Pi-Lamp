@@ -30,6 +30,9 @@ WORKDIR /usr/src/app
 # use host dbus
 ENV DBUS_SYSTEM_BUS_ADDRESS=unix:path=/host/run/dbus/system_bus_socket
 
+# resolve hosts from the .home domain
+COPY avahi-daemon.conf /etc/avahi/avahi-daemon.conf
+
 # build application
 RUN make all
 
