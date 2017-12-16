@@ -156,7 +156,7 @@ void process_data(uint8_t *data, size_t data_len)
             int d = 0;
             while(d < int(data_len))
             {
-                std::cerr << int(data[d]);
+                std::cerr << d << ":" << int(data[d]) << " ";
                 d++;
             }
             std::cerr << std::endl;
