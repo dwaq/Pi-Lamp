@@ -31,7 +31,9 @@ WORKDIR /usr/src/app
 ENV DBUS_SYSTEM_BUS_ADDRESS=unix:path=/host/run/dbus/system_bus_socket
 
 # resolve hosts from the .home domain
-COPY resolv.conf /etc/resolv.conf
+#COPY resolv.conf /etc/resolv.conf
+RUN echo "nameserver 192.168.1.1" >> /etc/resolv.conf
+RUN echo "domain home" >> /etc/resolv.conf
 
 # build application
 RUN make all
