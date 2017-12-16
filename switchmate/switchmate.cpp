@@ -153,6 +153,14 @@ void process_data(uint8_t *data, size_t data_len)
     {
     	if (data[0] == SERVICE_DATA)
     	{
+            int d = 0;
+            while(d < data_len)
+            {
+                std::cerr << int(data[d]);
+                d++;
+            }
+            std::cerr << std:endl;
+
         // log the full data message
         logSwitchmateData((int)data);
 
