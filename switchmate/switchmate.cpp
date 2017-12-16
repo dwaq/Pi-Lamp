@@ -12,13 +12,17 @@ int getSwitchState(void){
 }
 
 /* stores the state of the lightSwitch */
-int switchmateData = 0;
+const int bt_data_len = 8;
+int bt_data[bt_data_len];
 
-void logSwitchmateData(int data){
-    switchmateData = data;
-}
-int readSwitchmateData(void){
-    return switchmateData;
+void printSwitchmateData(void){
+    int d = 0;
+    while(d < bt_data_len)
+    {
+        std::cerr << d << ":" << bt_data[d] << " ";
+        d++;
+    }
+    std::cerr << std::endl;
 }
 
 // used to cancel the scan from main thread
@@ -153,19 +157,16 @@ void process_data(uint8_t *data, size_t data_len)
     {
     	if (data[0] == SERVICE_DATA)
     	{
+            // log the full data message to a global array
             int d = 0;
-            while(d < int(data_len))
+            while(d < bt_data_len)
             {
-                std::cerr << d << ":" << int(data[d]) << " ";
+                bt_data[d] = int(data[d]);
                 d++;
             }
-            std::cerr << std::endl;
 
-        // log the full data message
-        logSwitchmateData((int)data);
-
-        // last bit of the 7th data piece is the Switchmate status
-        setSwitchState(int(data[7]) & 1);
+            // last bit of the 7th data piece is the Switchmate status
+            setSwitchState(int(data[7]) & 1);
     	}
     }
 }
