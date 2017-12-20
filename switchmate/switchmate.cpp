@@ -155,7 +155,11 @@ void process_data(uint8_t *data, size_t data_len)
 {
     if (data_len > 0)
     {
-    	if (data[0] == SERVICE_DATA)
+      // data format is:
+      // 0:22 1:35 2:21 3:203 4:217 5:93 6:132 7:xx
+      // where xx is 20 for off and 21 for on
+      // i.e. the last bit is switchmate's state
+    	if ((data[0] == SERVICE_DATA) && (data[1] == 35))
     	{
             // log the full data message to a global array
             int d = 0;
