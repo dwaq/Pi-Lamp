@@ -37,12 +37,20 @@ int main(void) {
             std::cerr << "Switchmate data is: ";
             printSwitchmateData();
 
-            // switch lamps to match Switchmate
-            if (newState == 1){
-                switchBoth(true);
+            // skip setting lamps
+            if (getSkipSwitchMatch()) {
+              // reset variable for next time
+              setSkipSwitchMatch(0);
             }
+            // otherwise, switched via switchmate, so change lamps to match
             else {
+              // switch lamps to match Switchmate
+              if (newState == 1){
+                switchBoth(true);
+              }
+              else {
                 switchBoth(false);
+              }
             }
         }
         oldState = newState;
@@ -170,4 +178,7 @@ void toggleLight(void){
 
     // start scanner again
     thread = std::thread(scan_service);
+
+    // set skip state so lamps don't automatically toggle
+    setSkipSwitchMatch(1);
 }
