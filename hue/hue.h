@@ -26,6 +26,5 @@ void toggleSara(void);
 
 void bothOn(void);
 void bothOff(void);
-void switchBoth(bool on);
 
 #endif

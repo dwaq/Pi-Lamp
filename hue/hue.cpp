@@ -193,20 +193,10 @@ void toggleSara(void){
     }
 }
 
+/* set both lamps to a new state */
 void bothOn(void){
     switchLamp(both, true);
 };
 void bothOff(void){
     switchLamp(both, false);
 };
-/* set both lamps to a new state */
-void switchBoth(bool on){
-    if(on){
-        // turn both lamps on
-        bothOn();
-    }
-    else{
-        // turn both lamps off
-        bothOff();
-    }
-}
