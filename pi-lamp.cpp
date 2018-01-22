@@ -46,10 +46,10 @@ int main(void) {
             else {
               // switch lamps to match Switchmate
               if (newState == 1){
-                switchBoth(true);
+                bothOn();
               }
               else {
-                switchBoth(false);
+                bothOff();
               }
             }
         }
