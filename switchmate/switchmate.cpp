@@ -11,6 +11,17 @@ int getSwitchState(void){
     return switchState;
 }
 
+/* used to skip setting the lamp states to match the switchmate state */
+// Where 1 means skip
+int skipSwitchMatch = 0;
+
+void setSkipSwitchMatch(int state){
+    skipSwitchMatch = state;
+}
+int getSkipSwitchMatch(void){
+    return skipSwitchMatch;
+}
+
 /* stores the state of the lightSwitch */
 const int bt_data_len = 8;
 int bt_data[bt_data_len];
