@@ -75,12 +75,12 @@ int main(void) {
             std::cout << "TRIPLE clicked Dillon's button." << std::endl;
             toggleLight();
         }
-        /*
+
         if(dillonClicks == -1){
             std::cout << "SINGLE LONG clicked Dillon's button." << std::endl;
-            matchToggle(dillon);
+            switchLamp(dillon, alert);
         }
-        */
+
         // reset counter for next round
         dillonClicks = 0;
 
@@ -104,12 +104,12 @@ int main(void) {
             std::cout << "TRIPLE clicked Sara's button." << std::endl;
             toggleLight();
         }
-        /*
+
         if(saraClicks == -1){
             std::cout << "SINGLE LONG clicked Sara's button." << std::endl;
-            matchToggle(sara);
+            switchLamp(sara, alert);
         }
-        */
+
         // reset counter for next round
         saraClicks = 0;
 
