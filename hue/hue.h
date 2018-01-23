@@ -4,7 +4,6 @@
 #include <curl/curl.h>
 #include "ArduinoJson/src/ArduinoJson.h"
 #include <iostream>
-#include <stdbool.h>
 
 // arguments for controlling a particular light
 typedef enum {
@@ -13,8 +12,15 @@ typedef enum {
     both
 } LampOwners;
 
+// arguements for sending a parameter to a light
+typedef enum {
+  off,
+  on,
+  alert
+} LampParameter;
+
 int lampStatus(LampOwners owner);
-void switchLamp(LampOwners owner, bool on);
+void switchLamp(LampOwners owner, LampParameter parameter);
 
 void dillonOn(void);
 void dillonOff(void);
