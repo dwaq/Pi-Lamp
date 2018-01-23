@@ -157,10 +157,10 @@ void switchLamp(LampOwners owner, LampParameter parameter){
 }
 
 void dillonOn(void){
-    switchLamp(dillon, true);
+    switchLamp(dillon, on);
 };
 void dillonOff(void){
-    switchLamp(dillon, false);
+    switchLamp(dillon, off);
 };
 /* read status of Dillon's lamp and toggle*/
 void toggleDillon(void){
@@ -177,10 +177,10 @@ void toggleDillon(void){
 }
 
 void saraOn(void){
-    switchLamp(sara, true);
+    switchLamp(sara, on);
 };
 void saraOff(void){
-    switchLamp(sara, false);
+    switchLamp(sara, off);
 };
 /* read status of Sara's lamp and toggle */
 void toggleSara(void){
@@ -198,8 +198,8 @@ void toggleSara(void){
 
 /* set both lamps to a new state */
 void bothOn(void){
-    switchLamp(both, true);
+    switchLamp(both, on);
 };
 void bothOff(void){
-    switchLamp(both, false);
+    switchLamp(both, off);
 };
