@@ -56,7 +56,7 @@ int lampStatus(LampOwners owner){
     return -1;
 }
 
-void switchLamp(LampOwners owner, bool on){
+void switchLamp(LampOwners owner, LampParameter parameter){
     CURL *curl;
     CURLcode res;
     std::string readBuffer;
@@ -88,12 +88,15 @@ void switchLamp(LampOwners owner, bool on){
         }
         curl_easy_setopt(curl, CURLOPT_CUSTOMREQUEST, "PUT");
 
-        if (on){
+        if (parameter == on){
             // when turning on, set to full brightness
             curl_easy_setopt(curl, CURLOPT_POSTFIELDS, "{\"on\":true, \"bri\":254}");
         }
-        else {
+        else if (parameter == off) {
             curl_easy_setopt(curl, CURLOPT_POSTFIELDS, "{\"on\":false}");
+        }
+        else if (parameter == alert) {
+            curl_easy_setopt(curl, CURLOPT_POSTFIELDS, "{\"alert\":\"select\"}");
         }
 
         // redirect the response to a buffer
