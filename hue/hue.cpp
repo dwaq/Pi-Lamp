@@ -149,7 +149,33 @@ void switchLamp(LampOwners owner, LampParameter parameter){
           }
         }
         else if (parameter == on) {
+          // First and second objects
+          JsonObject& object0 = root[0];
+          JsonObject& object1 = root[1];
 
+          // check that both are successful
+          isSuccessful = object0.containsKey("success");
+          isSuccessful = object1.containsKey("success");
+
+          // first key (success)
+          for (JsonPair& object1pair0 : object1) {
+
+              // set up new object for that key
+              JsonObject& object1pair0SubObject = object1[object1pair0.key];
+
+              // second key
+              for (JsonPair& object1pair1 : object1pair0SubObject) {
+                  // contains brightness
+                  if (strstr(object1pair1.key, "bri") != NULL) {
+                      std::cout << "switched on at " << object1pair1.value << " brightness";
+
+                      // if not at full brightness
+                      if (object1pair1.value != 254) {
+                          isSuccessful = false;
+                      }
+                  }
+              }
+          }
         }
         else if (parameter == off) {
 
