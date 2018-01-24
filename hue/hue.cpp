@@ -116,42 +116,41 @@ void switchLamp(LampOwners owner, LampParameter parameter){
         // this time it is an array
         JsonArray& root = jsonBuffer.parseArray(readBuffer);
 
+        // assume true
+        bool isSuccessful = true;
+
         if (!root.success()) {
             std::cerr << "JSON parse failed" << std::endl;
+            isSuccessful = false;
         }
 
-        // first object [0] in array is on/off state
-        // second (when turning on) is the brightness it was set to (ignoring)
-        JsonObject& object0 = root[0];
+        if (parameter == alert) {
+          // First and second objects
+          JsonObject& object0 = root[0];
+          JsonObject& object1 = root[1];
 
-        // read first key
-        for (JsonPair& pair : object0)
-        {
-            // success or error
-            std::cout << pair.key;
+          // check that both are successful
+          isSuccessful = object0.containsKey("success");
+          isSuccessful = object1.containsKey("success");
 
-            // set up new object for that key
-            JsonObject& objectStatus = object0[pair.key];
+          // first key (success)
+          for (JsonPair& object1pair0 : object1) {
 
-            // if success:
-            if (strcmp(pair.key, "success") == 0){
-                // read second key
-                for (JsonPair& pair : objectStatus)
-                {
-                    // true or false (on or off)
-                    if (pair.value)
-                    {
-                        std::cout << ". Light is now on." << std::endl;
-                    }
-                    else{
-                        std::cout << ". Light is now off." << std::endl;
-                    }
-                }
-            }
-            // else is error:
-            else{
-                std::cout << "! " << objectStatus["description"] << std::endl;
-            }
+              // set up new object for that key
+              JsonObject& object1pair0SubObject = object1[object1pair0.key];
+
+              // second key
+              for (JsonPair& object1pair1 : object1pair0SubObject) {
+                  // contains alert
+                  if (strstr(object1pair1.key, "alert") != NULL) {
+                      std::cout << "alerted";
+                  }
+              }
+          }
+
+          if (isSuccessful) {
+              std::cout << ": successful." << std::endl;
+          }
         }
     }
 }
