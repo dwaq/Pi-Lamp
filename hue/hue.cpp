@@ -72,15 +72,15 @@ void switchLamp(LampOwners owner, LampParameter parameter){
 
         // set options based on owner
         if (owner == dillon){
-            std::cout << "Dillon's lamp: ";
+            std::cout << "Dillon's lamp ";
             curl_easy_setopt(curl, CURLOPT_URL, "philips-hue/api/29ocf3mMaJ1XAtbqeKM60A4dFen9tSc96u1JuQAi/lights/4/state");
         }
         else if (owner == sara){
-            std::cout << "Sara's lamp: ";
+            std::cout << "Sara's lamp ";
             curl_easy_setopt(curl, CURLOPT_URL, "philips-hue/api/29ocf3mMaJ1XAtbqeKM60A4dFen9tSc96u1JuQAi/lights/3/state");
         }
         else if (owner == both){
-            std::cout << "Both lamps: ";
+            std::cout << "Both lamps ";
             curl_easy_setopt(curl, CURLOPT_URL, "philips-hue/api/29ocf3mMaJ1XAtbqeKM60A4dFen9tSc96u1JuQAi/groups/1/action");
         }
         else{
