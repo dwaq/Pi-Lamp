@@ -134,7 +134,7 @@ void matchToggle(LampOwners owner){
     // if owner's light is currently on,
     if (lampStatus(owner) == 1){
         // turn both off
-        switchLamps(both, off);
+        switchLamp(both, off);
 
         // turn switchmate off if not already off
         if (getSwitchState() != 0){
@@ -144,7 +144,7 @@ void matchToggle(LampOwners owner){
     // else, owner's light is off,
     else {
         // turn both on
-        switchLamps(both, on);
+        switchLamp(both, on);
 
         // turn switchmate on if not already on
         if (getSwitchState() != 1){
