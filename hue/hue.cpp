@@ -150,13 +150,16 @@ void switchLamp(LampOwners owner, LampParameter parameter){
         }
         else if (parameter == on) {
 
-          if (isSuccessful) {
-              std::cout << ": successful." << std::endl;
-          }
         }
         else if (parameter == off) {
 
         }
+
+        if (isSuccessful) {
+            std::cout << ": successful." << std::endl;
+        }
+        else {
+            std::cout << ": failed." << std::endl;
         }
     }
 }
