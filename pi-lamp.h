@@ -6,7 +6,7 @@
 #include "switchmate/switchmate.h"
 #include "hue/hue.h"
 
-//void matchToggle(LampOwners owner);
+void matchToggle(LampOwners owner);
 
 void toggleLight(void);
 

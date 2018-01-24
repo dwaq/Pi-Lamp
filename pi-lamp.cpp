@@ -124,38 +124,28 @@ int main(void) {
 }
 
 /* set both lamps to the opposite of the button's lamp's current state */
-/*
 void matchToggle(LampOwners owner){
-    int buttonBit;
+    // if owner's light is currently on,
+    if (lampStatus(owner) == 1){
+        // turn both off
+        switchLamps(both, off);
 
-    // decide which button to check
-    if (owner == dillon){
-        buttonBit = DILLON_BIT;
-    }
-    else if (owner == sara){
-        buttonBit = SARA_BIT;
-    }
-
-    // currently on, so turn both off
-    if ((lampState & buttonBit) == buttonBit){
-        switchLamps(false);
-
-        // toggle switchmate if not off
+        // turn switchmate off if not already off
         if (getSwitchState() != 0){
             toggleLight();
         }
     }
-    // currently off, so turn both on
+    // else, owner's light is off,
     else {
-        switchLamps(true);
+        // turn both on
+        switchLamps(both, on);
 
-        // toggle switchmate if not on
+        // turn switchmate on if not already on
         if (getSwitchState() != 1){
             toggleLight();
         }
     }
 }
-*/
 
 /* toggles the overhead light using a Switchmate */
 void toggleLight(void){
