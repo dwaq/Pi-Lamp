@@ -78,7 +78,10 @@ int main(void) {
 
         if(dillonClicks == -1){
             std::cout << "SINGLE LONG clicked Dillon's button." << std::endl;
+            // alert user that button has been held for long enough
             switchLamp(dillon, alert);
+            // then toggle all
+            matchToggle(dillon);
         }
 
         // reset counter for next round
@@ -107,7 +110,10 @@ int main(void) {
 
         if(saraClicks == -1){
             std::cout << "SINGLE LONG clicked Sara's button." << std::endl;
+            // alert user that button has been held for long enough
             switchLamp(sara, alert);
+            // then toggle all
+            matchToggle(sara);
         }
 
         // reset counter for next round
