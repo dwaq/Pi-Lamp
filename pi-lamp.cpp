@@ -28,6 +28,10 @@ int main(void) {
     int oldState = getSwitchState();
     int newState = oldState;
 
+    // don't allow another long press to occur until the last one has been dealt with
+    int blockDillonLongPress = 0;
+    int blockSaraLongPress = 0;
+
     while(1) {
         // print state change
         newState = getSwitchState();
@@ -76,13 +80,16 @@ int main(void) {
             toggleLight();
         }
 
-        if(dillonClicks == -1){
+        if((dillonClicks == -1) && (blockDillonLongPress != -1)){
             std::cout << "SINGLE LONG clicked Dillon's button." << std::endl;
             // alert user that button has been held for long enough
             switchLamp(dillon, alert);
             // then toggle all
             matchToggle(dillon);
         }
+
+        // block long press from occuring again until it's changed to something else
+        blockDillonLongPress = dillonClicks;
 
         // reset counter for next round
         dillonClicks = 0;
@@ -108,13 +115,16 @@ int main(void) {
             toggleLight();
         }
 
-        if(saraClicks == -1){
+        if((saraClicks == -1) && (blockSaraLongPress == 0)){
             std::cout << "SINGLE LONG clicked Sara's button." << std::endl;
             // alert user that button has been held for long enough
             switchLamp(sara, alert);
             // then toggle all
             matchToggle(sara);
         }
+
+        // block long press from occuring again until it's changed to something else
+        blockSaraLongPress = saraClicks;
 
         // reset counter for next round
         saraClicks = 0;
