@@ -72,15 +72,15 @@ void switchLamp(LampOwners owner, LampParameter parameter){
 
         // set options based on owner
         if (owner == dillon){
-            std::cout << "Switching Dillon's lamp: ";
+            std::cout << "Dillon's lamp: ";
             curl_easy_setopt(curl, CURLOPT_URL, "192.168.1.16/api/29ocf3mMaJ1XAtbqeKM60A4dFen9tSc96u1JuQAi/lights/4/state");
         }
         else if (owner == sara){
-            std::cout << "Switching Sara's lamp: ";
+            std::cout << "Sara's lamp: ";
             curl_easy_setopt(curl, CURLOPT_URL, "192.168.1.16/api/29ocf3mMaJ1XAtbqeKM60A4dFen9tSc96u1JuQAi/lights/3/state");
         }
         else if (owner == both){
-            std::cout << "Switching both lamps: ";
+            std::cout << "Both lamps: ";
             curl_easy_setopt(curl, CURLOPT_URL, "192.168.1.16/api/29ocf3mMaJ1XAtbqeKM60A4dFen9tSc96u1JuQAi/groups/1/action");
         }
         else{
