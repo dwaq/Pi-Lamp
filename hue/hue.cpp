@@ -127,22 +127,20 @@ void switchLamp(LampOwners owner, LampParameter parameter){
         if (parameter == alert) {
           // First and second objects
           JsonObject& object0 = root[0];
-          JsonObject& object1 = root[1];
 
-          // check that both are successful
+          // check that it's successful
           isSuccessful = object0.containsKey("success");
-          isSuccessful = object1.containsKey("success");
 
           // first key (success)
-          for (JsonPair& object1pair0 : object1) {
+          for (JsonPair& object0pair0 : object0) {
 
               // set up new object for that key
-              JsonObject& object1pair0SubObject = object1[object1pair0.key];
+              JsonObject& object0pair0SubObject = object0[object0pair0.key];
 
               // second key
-              for (JsonPair& object1pair1 : object1pair0SubObject) {
+              for (JsonPair& object0pair1 : object0pair0SubObject) {
                   // contains alert
-                  if (strstr(object1pair1.key, "alert") != NULL) {
+                  if (strstr(object0pair1.key, "alert") != NULL) {
                       std::cout << "alerted";
                   }
               }
