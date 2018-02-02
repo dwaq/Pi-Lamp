@@ -166,25 +166,33 @@ void matchToggle(LampOwners owner){
 /* toggles the overhead light using a Switchmate */
 void toggleLight(void){
     // need to kill scanner before connecting to Switchmate w/ bluetooth
+    std::cout << "Cancelling Bluetooth scan" << std::endl;
     cancelScan();
     // wait for thread to terminate
+    std::cout << "Waiting for thread to terminate" << std::endl;
     if(thread.joinable())
     {
+        std::cout << "Joining thread" << std::endl;
         thread.join();
     }
 
     // if on, turn off
     if (getSwitchState()){
+        std::cout << "Turning off Switchmate" << std::endl;
         system("./switchmate/off.sh");
     }
     // if off, turn on
     else {
+        std::cout << "Turning on Switchmate" << std::endl;
         system("./switchmate/on.sh");
     }
 
     // start scanner again
+    std::cout << "Restarting scanner" << std::endl;
     thread = std::thread(scan_service);
 
     // set skip state so lamps don't automatically toggle
     setSkipSwitchMatch(1);
+
+    std::cout << "toggleLight() completed" << std::endl;
 }
