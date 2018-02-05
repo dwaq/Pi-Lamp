@@ -234,7 +234,7 @@ void scan_service(){
 	{
 		int len = 0;
 		unsigned char buf[HCI_MAX_EVENT_SIZE];
-		while ((len = read(current_hci_state.device_handle, buf, sizeof(buf))) < 0)
+		while (!!done && (len = read(current_hci_state.device_handle, buf, sizeof(buf))) < 0)
 		{
 			if (errno == EINTR || errno == EAGAIN)
 			{
@@ -268,7 +268,7 @@ void scan_service(){
 			int current_index = 0;
 			int data_error = 0;
 
-			while (!data_error && current_index < info->length)
+			while (!!done && !data_error && current_index < info->length)
 			{
 				size_t data_len = info->data[current_index];
 
