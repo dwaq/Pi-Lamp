@@ -251,7 +251,7 @@ void scan_service(){
 
 			if (meta->subevent != EVT_LE_ADVERTISING_REPORT)
 			{
-				std::cout << "continue" << std::endl;
+				//std::cout << "continue" << std::endl;
 				continue;
 			}
 
