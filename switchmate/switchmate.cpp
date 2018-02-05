@@ -37,7 +37,7 @@ void printSwitchmateData(void){
 }
 
 // used to cancel the scan from main thread
-int done = 0;
+volatile int done = 0;
 void cancelScan(void){
     done = 1;
 }
