@@ -286,6 +286,11 @@ void scan_service(){
 		}
 	}
 
+  if (done)
+	{
+		std::cout << "Scan cancelled successfully" << std::endl;
+	}
+
 	if (error)
 	{
 		std::cout << "Error scanning." << std::endl;
