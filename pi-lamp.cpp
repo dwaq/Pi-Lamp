@@ -140,7 +140,9 @@ int main(void) {
 
     // RESOURCE ACQUISITION IS INITIALIZATION allows us to call detach()
     // in the case of exceptions
+    #ifdef THREAD_ENABLED
     ThreadRAII wrapperObj(thread);
+    #endif
 
     return 0;
 }
