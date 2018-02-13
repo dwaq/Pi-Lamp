@@ -1,8 +1,14 @@
 #include "pi-lamp.h"
 
+// Uncomment to run Bluetooth thread in the background
+// which monitors the Switchmate's state
+//#define THREAD_ENABLED
+
 // create global thread for status
 // global required because killing from a function
+#ifdef THREAD_ENABLED
 std::thread thread(scan_service);
+#endif
 
 int main(void) {
     int dillonLamp = 23;    // Dillon's lamp switch
@@ -165,6 +171,7 @@ void matchToggle(LampOwners owner){
 
 /* toggles the overhead light using a Switchmate */
 void toggleLight(void){
+  #ifdef THREAD_ENABLED
     // need to kill scanner before connecting to Switchmate w/ bluetooth
     std::cout << "Cancelling Bluetooth scan" << std::endl;
     cancelScan();
@@ -175,6 +182,7 @@ void toggleLight(void){
         std::cout << "Joining thread" << std::endl;
         thread.join();
     }
+  #endif
 
     // if on, turn off
     if (getSwitchState()){
@@ -187,9 +195,11 @@ void toggleLight(void){
         system("./switchmate/on.sh");
     }
 
+  #ifdef THREAD_ENABLED
     // start scanner again
     std::cout << "Restarting scanner" << std::endl;
     thread = std::thread(scan_service);
+  #endif
 
     // set skip state so lamps don't automatically toggle
     setSkipSwitchMatch(1);
